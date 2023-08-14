@@ -16,20 +16,17 @@
         <section>
             <h2>New Trip Details</h2>
         </section>
-
+        
         <form action="" method="POST">
-            <label for="trip_name">Trip Name:</label>
-            <input type="text" id="trip_name" name="trip_name" required><br>
-            
-            <label for="trip_destination">Destination:</label>
-            <input type="text" id="trip_destination" name="trip_destination" required><br>
-            
-            <label for="departure_date">Departure Date</label>
-            <input type="date" id="departure_date" name="departure_date" required><br>
-            
-            <label for="arrival_date">Arrival Date:</label>
-            <input type="date" id="arrival_date" name="arrival_date" required><br>
-            
+            {% csrf_token %}
+            <p>{{ newTripForm.name.label }}</p>
+            {{ newTripForm.name }}
+            <p>{{ newTripForm.destination.label }}</p>
+            {{ newTripForm.destination }}
+            <p>{{ newTripForm.departure_date.label }}</p>
+            <input type="date" name="{{ newTripForm.departure_date.name }}" value="{{ newTripForm.departure_date.value|default:'' }}">
+            <p>{{ newTripForm.arrival_date.label }}</p>
+            <input type="date" name="{{ newTripForm.arrival_date.name }}" value="{{ newTripForm.arrival_date.value|default:'' }}">       
             <input type="submit" value="Create">
         </form>
     </main>
