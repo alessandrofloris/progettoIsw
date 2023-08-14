@@ -16,11 +16,14 @@ class Trip(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
     destination = models.CharField(max_length=64)
-    departure_date = models.DateTimeField("departure date")
-    arrival_date = models.DateTimeField("arrival date")
+    departure_date = models.DateField("departure date")
+    arrival_date = models.DateField("arrival date")
 
     def __str__(self):
         return self.name
+    
+    def check_dates(self):
+        return self.arrival_date >= self.departure_date
 
 
 class Activity(models.Model):
@@ -33,6 +36,9 @@ class Activity(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def check_dates(self):
+        return self.end_date >= self.start_date
 
 class Invitation(models.Model):
     id = models.AutoField(primary_key=True)
