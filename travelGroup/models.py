@@ -21,6 +21,9 @@ class Trip(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def check_dates(self):
+        return self.arrival_date >= self.departure_date
 
 
 class Activity(models.Model):
@@ -33,6 +36,9 @@ class Activity(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def check_dates(self):
+        return self.end_date >= self.start_date
 
 class Invitation(models.Model):
     id = models.AutoField(primary_key=True)
