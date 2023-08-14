@@ -19,3 +19,6 @@ def trips(request):
         "tripList": trip_list
     }
     return render(request, "travelGroup/trips.html", context)
+
+def newtrip(request):
+    return render(request, "travelGroup/newtrip.html")
