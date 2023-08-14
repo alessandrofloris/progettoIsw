@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 {% load static %}
     <link rel="stylesheet" href="{% static 'travelGroup/tripsTemplate.css' %}">
-    <title>I Miei Viaggi</title>
+    <title>My Trips</title>
 </head>
 <body>
 
@@ -12,16 +12,16 @@
     <div class="trip-list-table">
     <div class="single-trip-container ">
         <div class="single-field-trip-container trip-table-header">
-            Nome Viaggio
+            Trip Name
         </div>
         <div class="single-field-trip-container trip-table-header">
-            Destinazione
+            Trip Destination
         </div>
         <div class="single-field-trip-container trip-table-header">
-            Data Partenza
+            Arrival Date
         </div>
         <div class="single-field-trip-container trip-table-header">
-            Data Ritorno
+            Departure Date
         </div>
     </div>
     {% for trip in tripList %}
@@ -42,7 +42,7 @@
     {% endfor %}
     </div>
 {% else %}
-    <p>Non partecipi a nessun viaggio!</p>
+    <p>No trip to show!</p>
 {% endif %}
 
 </body>
