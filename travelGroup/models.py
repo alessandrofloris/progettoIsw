@@ -2,6 +2,7 @@ from django.db import models
 
 
 class User(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
     surname = models.CharField(max_length=64)
     email = models.EmailField()
@@ -12,6 +13,7 @@ class User(models.Model):
 
 
 class Trip(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
     destination = models.CharField(max_length=64)
     departure_date = models.DateTimeField("departure date")
@@ -22,6 +24,7 @@ class Trip(models.Model):
 
 
 class Activity(models.Model):
+    id = models.AutoField(primary_key=True)
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
     name = models.CharField(max_length=64)
     description = models.CharField(max_length=256)
