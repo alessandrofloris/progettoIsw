@@ -16,8 +16,8 @@ class Trip(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
     destination = models.CharField(max_length=64)
-    departure_date = models.DateTimeField("departure date")
-    arrival_date = models.DateTimeField("arrival date")
+    departure_date = models.DateField("departure date")
+    arrival_date = models.DateField("arrival date")
 
     def __str__(self):
         return self.name
