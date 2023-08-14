@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Trip
-
+from .forms import TripForm
 
 def index(request):
     return HttpResponse("This is the homepage! "
@@ -21,4 +21,11 @@ def trips(request):
     return render(request, "travelGroup/trips.html", context)
 
 def newtrip(request):
-    return render(request, "travelGroup/newtrip.html")
+    if request.method == "POST":
+        form = TripForm(request.POST)
+        if form.is_valid:
+            form.save()
+            return redirect("mytrips")  # Redirect alla pagina "trips"
+    else:
+        form = TripForm()
+    return render(request, "travelGroup/newtrip.html", {"newTripForm": form})
