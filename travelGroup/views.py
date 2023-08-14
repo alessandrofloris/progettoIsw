@@ -1,6 +1,8 @@
 from django.http import HttpResponse
-
+from django.shortcuts import render
+from django.template import loader
 from .models import Trip
+
 # Create your views here.
 
 def index(request):
@@ -9,5 +11,7 @@ def index(request):
 
 def trips(request):
     trips = Trip.objects.all()
-    output = ", ".join([t.name for t in trips])
-    return HttpResponse(output)
+    context = {
+        "tripList": trips
+    }
+    return render(request, "travelGroup/trips.html", context)

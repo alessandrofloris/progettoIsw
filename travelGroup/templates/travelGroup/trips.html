@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>I Miei Viaggi</title>
+</head>
+<body>
+
+{% if tripList %}
+    <ul>
+    {% for trip in tripList %}
+        <li>{{ trip.name }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No trips are available.</p>
+{% endif %}
+
+
+</body>
+</html>
