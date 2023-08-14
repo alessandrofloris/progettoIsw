@@ -2,20 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+{% load static %}
+    <link rel="stylesheet" href="{% static 'travelGroup/tripsTemplate.css' %}">
     <title>I Miei Viaggi</title>
 </head>
 <body>
 
 {% if tripList %}
-    <ul>
+    <div class="trip-list-table">
+    <div class="single-trip-container ">
+        <div class="single-field-trip-container trip-table-header">
+            Nome Viaggio
+        </div>
+        <div class="single-field-trip-container trip-table-header">
+            Destinazione
+        </div>
+        <div class="single-field-trip-container trip-table-header">
+            Data Partenza
+        </div>
+        <div class="single-field-trip-container trip-table-header">
+            Data Ritorno
+        </div>
+    </div>
     {% for trip in tripList %}
-        <li>{{ trip.name }}</li>
+        <div class="single-trip-container">
+        <div class="single-field-trip-container">
+            {{ trip.name }}
+        </div>
+        <div class="single-field-trip-container">
+            {{ trip.destination }}
+        </div>
+        <div class="single-field-trip-container">
+            {{ trip.departure_date }}
+        </div>
+        <div class="single-field-trip-container">
+            {{ trip.arrival_date }}
+        </div>
+    </div>
     {% endfor %}
-    </ul>
+    </div>
 {% else %}
-    <p>No trips are available.</p>
+    <p>Non partecipi a nessun viaggio!</p>
 {% endif %}
-
 
 </body>
 </html>

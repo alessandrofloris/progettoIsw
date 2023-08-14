@@ -1,0 +1,41 @@
+.trip-list-table {
+    width: 100%;
+    height: auto;
+
+    background: #fff;
+    border: 1px solid #000;
+
+    padding: 0.5em;
+
+    box-sizing: border-box;
+}
+
+.trip-table-header {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.single-trip-container {
+    width: 100%;
+    height: 3em;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.single-field-trip-container {
+    width: auto;
+    height: 100%;
+
+    text-align: center;
+
+    border: 1px solid #000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1;
+}
