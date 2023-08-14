@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Trip</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'travelGroup/newtripTemplate.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Create a new trip to share with your friends!</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>New Trip Details</h2>
+        </section>
+
+        <form action="" method="POST">
+            <label for="trip_name">Trip Name:</label>
+            <input type="text" id="trip_name" name="trip_name" required><br>
+            
+            <label for="trip_destination">Destination:</label>
+            <input type="text" id="trip_destination" name="trip_destination" required><br>
+            
+            <label for="departure_date">Departure Date</label>
+            <input type="date" id="departure_date" name="departure_date" required><br>
+            
+            <label for="arrival_date">Arrival Date:</label>
+            <input type="date" id="arrival_date" name="arrival_date" required><br>
+            
+            <input type="submit" value="Create">
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 NoNameCompany. All rights reserved.</p>
+    </footer>
+</body>
+</html>
