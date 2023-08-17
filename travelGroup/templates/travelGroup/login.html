@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Trip</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'travelGroup/login.css' %}">
+</head>
+<body>
+
+<main>
+        <section>
+            <h2></h2>
+        </section>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            <p>{{ loginUserForm.email.label }}</p>
+            <input type="email" value="">
+            <p>{{ loginUserForm.password.label }}</p>
+            <input type="password" value="">
+            <input type="submit" value="login">
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 NoNameCompany. All rights reserved.</p>
+    </footer>
+</body>
+
+
+</body>
+</html>
