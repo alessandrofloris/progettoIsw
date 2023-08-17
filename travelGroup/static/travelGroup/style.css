@@ -1,0 +1,10 @@
+body {
+    background-color: #f0fbff;
+}
+
+.box-buttons{
+    background-color: #2e94b9;
+    padding: 10px;
+    margin: 10px;
+    border: 10px;
+}

@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .models import Trip
+from .models import Trip, User
 from .forms import TripForm
 
 def index(request):
@@ -24,3 +24,14 @@ def newtrip(request):
     else:
         form = TripForm()
     return render(request, "travelGroup/newtrip.html", {"newTripForm": form})
+
+def invite(request):
+    user_list = User.objects.all()
+    trip_list = Trip.objects.all()
+
+    context = {
+        "users": user_list,
+        "tripList": trip_list
+    }
+
+    return render(request, "travelGroup/invite.html", context)

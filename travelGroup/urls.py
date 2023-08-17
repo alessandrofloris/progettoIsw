@@ -7,4 +7,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("mytrips", views.trips),
     path("newtrip", views.newtrip),
+    path("invite", views.invite)
 ]
