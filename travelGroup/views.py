@@ -15,6 +15,7 @@ def trips(request):
     }
     return render(request, "travelGroup/trips.html", context)
 
+
 def newtrip(request):
     if request.method == "POST":
         form = TripForm(request.POST)
@@ -24,3 +25,7 @@ def newtrip(request):
     else:
         form = TripForm()
     return render(request, "travelGroup/newtrip.html", {"newTripForm": form})
+
+
+def modify_trip(request, trip_id):
+    return HttpResponse("You want to modify the trip %s." % trip_id)
