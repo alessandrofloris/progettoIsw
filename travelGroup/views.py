@@ -23,6 +23,8 @@ def registration(request):
     context = {'registrationUserForm': form}
     return render(request, "travelGroup/registration.html", context)
 
+from .models import Trip, User
+from .forms import TripForm
 
 def index(request):
     return HttpResponse("This is the homepage! "
@@ -40,9 +42,28 @@ def trips(request):
 def newtrip(request):
     if request.method == "POST":
         form = TripForm(request.POST)
-        if form.is_valid:
-            form.save()
-            return HttpResponseRedirect("mytrips")  # Redirect alla pagina "trips"
+        newtrip_validation(form)
     else:
         form = TripForm()
+    return newtrip_render(request, form)
+
+def newtrip_render(request, form):
     return render(request, "travelGroup/newtrip.html", {"newTripForm": form})
+
+def newtrip_validation(form):
+    if form.is_valid:
+        form.save()
+        return HttpResponseRedirect("mytrips")
+    else:
+        return HttpResponse("not a valid form!")
+
+def invite(request):
+    user_list = User.objects.all()
+    trip_list = Trip.objects.all()
+
+    context = {
+        "users": user_list,
+        "tripList": trip_list
+    }
+
+    return render(request, "travelGroup/invite.html", context)
