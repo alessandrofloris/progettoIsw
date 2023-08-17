@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import Trip
 from .forms import TripForm
@@ -10,11 +10,6 @@ def index(request):
 
 def trips(request):
     trip_list = Trip.objects.all()
-    # the context is a dictionary mapping template 
-    # variable names to Python objects.
-    # the string "tripList" is the dictionary's key 
-    # and the associated value refers to the "trips.html" file 
-    # placed into "travelGroup/templates/travelGroup" path.
     context = {
         "tripList": trip_list
     }
@@ -25,7 +20,7 @@ def newtrip(request):
         form = TripForm(request.POST)
         if form.is_valid:
             form.save()
-            return redirect("mytrips")  # Redirect alla pagina "trips"
+            return HttpResponseRedirect("mytrips")  # Redirect alla pagina "trips"
     else:
         form = TripForm()
     return render(request, "travelGroup/newtrip.html", {"newTripForm": form})
