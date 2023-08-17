@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-{% load static %}
-    <link rel="stylesheet" href="{% static 'travelGroup/tripsTemplate.css' %}">
-    <title>My Trips</title>
-</head>
-<body>
+{% extends "travelGroup/base.html" %}
 
-{% if tripList %}
+{% block extra-head %}
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'travelGroup/tripsTemplate.css' %}">
+
+{% endblock %}
+
+{% block main-content %}
+
+    {% if tripList %}
     <div class="trip-list-table">
     <div class="single-trip-container ">
         <div class="single-field-trip-container trip-table-header">
@@ -45,5 +46,4 @@
     <p>No trip to show!</p>
 {% endif %}
 
-</body>
-</html>
+{% endblock %}
