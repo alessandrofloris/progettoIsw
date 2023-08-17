@@ -1,0 +1,86 @@
+ *{
+     background-color: #f0fbff;
+ }
+
+ input[type="submit"]{
+     background-color: #fdb44b;
+     border: none;
+     border-radius: 5px;
+ }
+
+
+option {
+    font-size: 16px; /* Dimensione del testo delle opzioni */
+    padding: 10px; /* Spaziatura interna delle opzioni */
+}
+
+ body{
+     background-color: #acdcee;
+ }
+
+.form input,  select{
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+ .box-buttons {
+     display: flex;
+     justify-content: space-between; /* Allinea i bottoni ai lati opposti */
+     padding: 40px;
+     background-color: #475053;
+     margin: 10px 0 10px;
+ }
+
+ /* Stile simile a un bottone */
+ .button-link {
+     padding: 10px 20px;
+     background-color: #2e94b9;
+     color: white;
+     text-decoration: none;
+     border: none;
+     border-radius: 5px;
+     cursor: pointer;
+ }
+
+ .trip-list-table {
+    width: 100%;
+    height: auto;
+
+    background: #fff;
+    border: 1px solid #000;
+
+    padding: 0.5em;
+
+    box-sizing: border-box;
+}
+
+.trip-table-header {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.single-trip-container {
+    width: 100%;
+    height: 3em;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.single-field-trip-container {
+    width: auto;
+    height: 100%;
+
+    text-align: center;
+
+    border: 1px solid #000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1;
+}
