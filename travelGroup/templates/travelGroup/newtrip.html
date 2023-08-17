@@ -17,6 +17,7 @@
             <h2>New Trip Details</h2>
         </section>
         
+        {# new trip form #}
         <form action="" method="POST">
             {% csrf_token %}
             <p>{{ newTripForm.name.label }}</p>
@@ -27,6 +28,27 @@
             <input type="date" name="{{ newTripForm.departure_date.name }}" value="{{ newTripForm.departure_date.value|default:'' }}">
             <p>{{ newTripForm.arrival_date.label }}</p>
             <input type="date" name="{{ newTripForm.arrival_date.name }}" value="{{ newTripForm.arrival_date.value|default:'' }}">       
+            
+            <input id="activityButton" type="button" value="">
+            
+            {# add activity formset #}
+            <div id="activityFormset" style="display: none;">
+                {% for form in activity_formset %}
+                    {{ activity_formset.management_form }}
+                    <p>{{ form.name.label }}</p>
+                    {{ form.name }}
+                    <p>{{ form.description.label }}</p>
+                    {{ form.description }}
+                    <p>{{ form.start_date.label }}</p>
+                    <input type="date" name="{{ form.start_date.name }}" value="{{ form.start_date.value|default:'' }}">
+                    <p>{{ form.end_date.label }}</p>
+                    <input type="date" name="{{ form.end_date.name }}" value="{{ form.end_date.value|default:'' }}">  
+                {% endfor %}
+            </div>
+            
+            {# script to handle the "Add Activity" button#}
+            <script src="{% static 'travelGroup/activityButtonScript.js' %}"></script>
+
             <input type="submit" value="Create">
         </form>
     </main>
