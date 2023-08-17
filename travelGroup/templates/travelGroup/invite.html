@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invita partecipante</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'travelGroup/newtripTemplate.css' %}">
+</head>
+
+<body>
+    <div class="box-buttons">
+        <a href="mytrips" class="button-link">I MIEI VIAGGI</a>
+    </div>
+
+    <form class="form" action="" method="post">
+
+        <fieldset>
+        <label for="email"> Email </label>
+            <select>
+                <option value="" selected></option>
+                {% for user in users %}
+                <option>{{ user.email }}</option>
+                {% endfor %}
+            </select>
+        <br>
+
+        <label for="tripname"> Nome viaggio </label>
+            <select>
+                <option value="" selected></option>
+                {% for trip in tripList %}
+                <option>{{ trip.name }}</option>
+                {% endfor %}
+            </select>
+        <br>
+
+        <input type="submit" value="INVITA">
+
+        </fieldset>
+    </form>
+
+    <footer>
+        <p>&copy; 2023 NoNameCompany. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>
