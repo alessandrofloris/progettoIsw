@@ -4,6 +4,7 @@ header {
     height: 8em;
     width: 100%;
     background: blue;
+}
 
     display: flex;
     justify-content: center;
