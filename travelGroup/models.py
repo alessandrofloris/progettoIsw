@@ -19,6 +19,7 @@ class Trip(models.Model):
     destination = models.CharField(max_length=64, verbose_name="Trip Destination")
     departure_date = models.DateField(verbose_name="Departure Date")
     arrival_date = models.DateField(verbose_name="Arrival Date")
+    participants = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name

@@ -54,13 +54,16 @@
             Arrival Date
         </div>
         <div class="single-field-trip-container trip-table-header">
-            Partecipants
+            Participants
         </div>
         <div class="single-field-trip-container trip-table-header">
             Itinerary
         </div>
         <div class="single-field-trip-container trip-table-header">
-            Action
+            View Trip
+        </div>
+        <div class="single-field-trip-container trip-table-header">
+            Modify Trip
         </div>
     </div>
     {% for trip in tripList %}
@@ -78,13 +81,16 @@
             {{ trip.arrival_date }}
         </div>
         <div class="single-field-trip-container">
-            Partecipants
+            {{ trip.participants.count }} participants
         </div>
         <div class="single-field-trip-container">
-            Itinerario
+            {{ trip.activity_set.count }} activities
         </div>
         <div class="single-field-trip-container">
-            <a href="/modifytrip/{{ trip.id }}">Modify</a> {# Sarebbe meglio usare il costrutto {url view args} #}
+            <a href={% url 'travelGroup:viewtrip' trip_id=trip.id %}>View</a>
+        </div>
+        <div class="single-field-trip-container">
+            <a href={% url 'travelGroup:modifytrip' trip_id=trip.id %}>Modify</a>
         </div>
     </div>
     {% endfor %}

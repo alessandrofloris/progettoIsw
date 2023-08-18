@@ -1,0 +1,79 @@
+{% extends "travelGroup/base.html" %}
+
+{% block extra-head %}
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'travelGroup/tripsTemplate.css' %}">
+
+{% endblock %}
+
+{% block header %}
+
+    <header>
+
+        <div class="button-container">
+            <button class="button">
+                <a href={% url 'travelGroup:mytrips' %}>Back</a>
+            </button>
+        </div>
+
+    </header>
+
+{% endblock %}
+
+{% block main-content %}
+
+    <div class="trip-details-container">
+
+        <div class="field_container">
+            <h3 class="field-label">Trip Name:</h3>
+            <p class="field-content">{{ trip.name }}</p>
+        </div>
+
+        <div class="field_container">
+            <h3 class="field-label">Trip Destination:</h3>
+            <p class="field-content">{{ trip.destination }}</p>
+        </div>
+
+        <div class="field_container">
+            <h3 class="field-label">Departure date:</h3>
+            <p class="field-content">{{ trip.departure_date }}</p>
+        </div>
+
+        <div class="field_container">
+            <h3 class="field-label">Arrival date:</h3>
+            <p class="field-content">{{ trip.arrival_date }}</p>
+        </div>
+
+        <div class="field_container">
+            <h3 class="field-label">Participants:</h3>
+            {% if participants.count > 0 %}
+                {% for participant in participants %}
+                    <p class="field-content">{{ participant.name }} {{ participant.surname }}</p>
+                {% endfor %}
+            {% else %}
+                <p class="field-content">This trip has no participants</p>
+            {% endif %}
+        </div>
+
+    <div class="field_container">
+            <h3 class="field-label">Activities:</h3>
+            {% if activities.count > 0 %}
+                {% for activity in activities %}
+                    <label class="activity-label">Name</label>
+                    <p class="field-content">{{  activity.name }}</p>
+                    <label class="activity-label">Description</label>
+                    <p class="field-content">{{  activity.description }}</p>
+                    <label class="activity-label">Start date</label>
+                    <p class="field-content">{{  activity.start_date }}</p>
+                    <label class="activity-label">End date</label>
+                    <p class="field-content">{{  activity.end_date }}</p>
+                {% endfor %}
+            {% else %}
+                <p class="field-content">This trip has no activities</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+{% endblock %}
