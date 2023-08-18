@@ -3,3 +3,7 @@ a {
     font-weight: bold;
     text-decoration: none;
 }
+
+label {
+    font-weight: bold;
+}

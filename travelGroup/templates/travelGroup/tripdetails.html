@@ -46,10 +46,32 @@
         </div>
 
         <div class="field_container">
-            <h3 class="field-label">Partecipants:</h3>
-            {% for partecipant in participants %}
-                <p class="field-content">{{ partecipant.name }} {{ partecipant.surname }}</p>
-            {% endfor %}
+            <h3 class="field-label">Participants:</h3>
+            {% if participants.count > 0 %}
+                {% for participant in participants %}
+                    <p class="field-content">{{ participant.name }} {{ participant.surname }}</p>
+                {% endfor %}
+            {% else %}
+                <p class="field-content">This trip has no participants</p>
+            {% endif %}
+        </div>
+
+    <div class="field_container">
+            <h3 class="field-label">Activities:</h3>
+            {% if activities.count > 0 %}
+                {% for activity in activities %}
+                    <label class="activity-label">Name</label>
+                    <p class="field-content">{{  activity.name }}</p>
+                    <label class="activity-label">Description</label>
+                    <p class="field-content">{{  activity.description }}</p>
+                    <label class="activity-label">Start date</label>
+                    <p class="field-content">{{  activity.start_date }}</p>
+                    <label class="activity-label">End date</label>
+                    <p class="field-content">{{  activity.end_date }}</p>
+                {% endfor %}
+            {% else %}
+                <p class="field-content">This trip has no activities</p>
+            {% endif %}
         </div>
 
     </div>

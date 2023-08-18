@@ -90,9 +90,12 @@ def invite(request):
 def view_trip(request, trip_id):
 
     trip = Trip.objects.get(id=trip_id)
-    partecipants = trip.participants.all()
+    participants = trip.participants.all()
+    activities = trip.activity_set.all()
+
     context = {
         "trip": trip,
-        "partecipants": partecipants
+        "participants": participants,
+        "activities": activities
     }
     return render(request, "travelGroup/tripdetails.html", context)
