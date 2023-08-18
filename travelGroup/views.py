@@ -50,20 +50,21 @@ def newtrip(request):
     return newtrip_render(request, newtrip_form, activity_formset)
 
 def newtrip_render(request, newtrip_form, activity_formset):
-    return render(request, "travelGroup/newtrip.html", {"newTripForm": newtrip_form, "activity_formset": activity_formset})
+    context = {"newTripForm": newtrip_form, "activity_formset": activity_formset}
+    return render(request, "travelGroup/newtrip.html", context)
 
 
 def modify_trip(request, trip_id):
     return HttpResponse("You want to modify the trip %s." % trip_id)
 def newtrip_validation(form):
-    if form.is_valid:
+    if form.is_valid():
         form.save()
         return HttpResponseRedirect("mytrips")
     else:
         return HttpResponse("not a valid form!")
     
 def addactivity_validation(form):
-    if form.is_valid:
+    if form.is_valid():
         form.save()
         # HttpResponseRedirect to newtrip
         return HttpResponse("ok")
