@@ -1,18 +1,34 @@
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Trip, User, Invitation
 from .forms import TripForm, ActivityFormSet, RegistrationUserForm, LoginUserForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
-def login(request):
-    form = LoginUserForm()
+def login_page(request):
     if request.method == 'POST':
-        form = LoginUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-    context = {'loginUserForm': form}
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        user = authenticate(request, email=email, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('trips')
+        else:
+            messages.info(request, 'email or password incorrect')
+
+    context = {}
     return render(request, "travelGroup/login.html", context)
+
+
+@login_required
+def logout(request):
+    logout(request)
+    return redirect('loginPage')
 
 
 def registration(request):
@@ -21,6 +37,7 @@ def registration(request):
         form = RegistrationUserForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Account created')
     context = {'registrationUserForm': form}
     return render(request, "travelGroup/registration.html", context)
 
@@ -30,6 +47,7 @@ def index(request):
                         "From here you'll be able to create a new trip group!")
 
 
+@login_required
 def trips(request):
     trip_list = Trip.objects.all()
     context = {
@@ -38,6 +56,7 @@ def trips(request):
     return render(request, "travelGroup/trips.html", context)
 
 
+@login_required
 def newtrip(request):
     if request.method == "POST":
         newtrip_form = TripForm(request.POST)
