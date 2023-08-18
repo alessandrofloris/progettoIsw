@@ -28,4 +28,4 @@ class TripForm(ModelForm):
         model = Trip
         fields = '__all__'
 
-ActivityFormSet = modelformset_factory(Activity, exclude=())
+ActivityFormSet = modelformset_factory(Activity, exclude=(), extra=0)
