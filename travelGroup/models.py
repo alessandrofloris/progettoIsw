@@ -35,7 +35,7 @@ class Activity(models.Model):
     description = models.CharField(max_length=256, verbose_name="Activity Description")
     start_date = models.DateTimeField(verbose_name="Start Date")
     end_date = models.DateTimeField(verbose_name="End Date")
-
+    
     def __str__(self):
         return self.name
     
