@@ -87,4 +87,11 @@ def invite(request):
 
 
 def view_trip(request, trip_id):
-    return HttpResponse("You want to view the details of the trip %s." % trip_id)
+
+    trip = Trip.objects.get(id=trip_id)
+    partecipants = trip.participants.all()
+    context = {
+        "trip": trip,
+        "partecipants": partecipants
+    }
+    return render(request, "travelGroup/tripdetails.html", context)
