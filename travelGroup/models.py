@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 
 class User(models.Model):
@@ -14,10 +15,10 @@ class User(models.Model):
 
 class Trip(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=64)
-    destination = models.CharField(max_length=64)
-    departure_date = models.DateField("departure date")
-    arrival_date = models.DateField("arrival date")
+    name = models.CharField(max_length=64, verbose_name="Trip Name")
+    destination = models.CharField(max_length=64, verbose_name="Trip Destination")
+    departure_date = models.DateField(verbose_name="Departure Date")
+    arrival_date = models.DateField(verbose_name="Arrival Date")
 
     def __str__(self):
         return self.name
@@ -28,11 +29,11 @@ class Trip(models.Model):
 
 class Activity(models.Model):
     id = models.AutoField(primary_key=True)
-    trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
-    name = models.CharField(max_length=64)
-    description = models.CharField(max_length=256)
-    start_date = models.DateTimeField("start date")
-    end_date = models.DateTimeField("end date")
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name="Trip's Activity")
+    name = models.CharField(max_length=64, verbose_name="Activity Name")
+    description = models.CharField(max_length=256, verbose_name="Activity Description")
+    start_date = models.DateTimeField(verbose_name="Start Date")
+    end_date = models.DateTimeField(verbose_name="End Date")
 
     def __str__(self):
         return self.name
