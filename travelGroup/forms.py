@@ -26,6 +26,6 @@ class LoginUserForm(ModelForm):
 class TripForm(ModelForm):
     class Meta:
         model = Trip
-        fields = ["name", "destination", "departure_date", "arrival_date"]
+        fields = '__all__'
 
 ActivityFormSet = modelformset_factory(Activity, exclude=())
