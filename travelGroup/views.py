@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import Trip
-from .forms import TripForm, RegistrationUserForm, LoginUserForm
+from .forms import TripForm, ActivityFormSet, RegistrationUserForm, LoginUserForm
 
 
 def login(request):
@@ -41,19 +41,30 @@ def trips(request):
 
 def newtrip(request):
     if request.method == "POST":
-        form = TripForm(request.POST)
-        newtrip_validation(form)
+        newtrip_form = TripForm(request.POST)
+        activity_formset = ActivityFormSet(request.POST)
+        newtrip_validation(newtrip_form)
+        # activity validation
     else:
-        form = TripForm()
-    return newtrip_render(request, form)
+        newtrip_form = TripForm()
+        activity_formset = ActivityFormSet()
+    return newtrip_render(request, newtrip_form, activity_formset)
 
-def newtrip_render(request, form):
-    return render(request, "travelGroup/newtrip.html", {"newTripForm": form})
+def newtrip_render(request, newtrip_form, activity_formset):
+    return render(request, "travelGroup/newtrip.html", {"newTripForm": newtrip_form, "activity_formset": activity_formset})
 
 def newtrip_validation(form):
     if form.is_valid:
         form.save()
         return HttpResponseRedirect("mytrips")
+    else:
+        return HttpResponse("not a valid form!")
+    
+def addactivity_validation(form):
+    if form.is_valid:
+        form.save()
+        # HttpResponseRedirect to newtrip
+        return HttpResponse("ok")
     else:
         return HttpResponse("not a valid form!")
 
