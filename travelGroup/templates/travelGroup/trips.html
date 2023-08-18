@@ -51,7 +51,10 @@
             Itinerary
         </div>
         <div class="single-field-trip-container trip-table-header">
-            Action
+            View Trip
+        </div>
+        <div class="single-field-trip-container trip-table-header">
+            Modify Trip
         </div>
     </div>
     {% for trip in tripList %}
@@ -75,7 +78,10 @@
             Itinerario
         </div>
         <div class="single-field-trip-container">
-            <a href="/modifytrip/{{ trip.id }}">Modify</a> {# Sarebbe meglio usare il costrutto {url view args} #}
+            <a href="/viewtrip/{{ trip.id }}">View</a> {# todo Sarebbe meglio usare il costrutto {url view args} #}
+        </div>
+        <div class="single-field-trip-container">
+            <a href="/modifytrip/{{ trip.id }}">Modify</a> {# todo Sarebbe meglio usare il costrutto {url view args} #}
         </div>
     </div>
     {% endfor %}

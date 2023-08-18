@@ -10,5 +10,6 @@ urlpatterns = [
     path("modifytrip/<int:trip_id>", views.modify_trip, name='modifytrip'),
     path("login", views.login),
     path("registration", views.registration),
-    path("invite", views.invite)
+    path("invite", views.invite),
+    path("viewtrip/<int:trip_id>", views.view_trip, name='viewtrip'),
 ]
