@@ -16,13 +16,15 @@
 
         <form action="" method="POST">
             {% csrf_token %}
-            <p>{{ loginUserForm.email.label }}</p>
-            <input type="email" value="">
-            <p>{{ loginUserForm.password.label }}</p>
-            <input type="password" value="">
+            <input type="email" name="email" >
+            <input type="password"  name="password" >
             <input type="submit" value="login">
         </form>
     </main>
+
+    {% for message in messages %}
+        <p id="">{{message}}}</p>
+    {% endfor %}
 
     <footer>
         <p>&copy; 2023 NoNameCompany. All rights reserved.</p>
