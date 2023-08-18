@@ -44,10 +44,10 @@ class Activity(models.Model):
 
 class Invitation(models.Model):
     id = models.AutoField(primary_key=True)
-    sender = models.ForeignKey(User, on_delete=models.CASCADE)
-    recipient = models.EmailField(max_length=254, unique=True)
-    trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
-    state = models.BooleanField(default=False)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Sender")
+    recipient = models.EmailField(max_length=254, unique=True, verbose_name="Recipient")
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name="Trip's Invitation")
+    state = models.BooleanField(default=False, verbose_name="State")
 
     # TODO: to check
     def __str__(self):
@@ -56,9 +56,9 @@ class Invitation(models.Model):
 
 class Comment(models.Model):
     id = models.AutoField(primary_key=True)
-    content = models.CharField(max_length=300)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    trip = models.ForeignKey(Trip, on_delete=models.CASCADE)
+    content = models.CharField(max_length=300, verbose_name="Content")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="User")
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name="Trip")
 
     # TODO: to check
     def __str__(self):
