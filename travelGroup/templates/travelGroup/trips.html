@@ -81,7 +81,7 @@
             <a href="/viewtrip/{{ trip.id }}">View</a> {# todo Sarebbe meglio usare il costrutto {url view args} #}
         </div>
         <div class="single-field-trip-container">
-            <a href="/modifytrip/{{ trip.id }}">Modify</a> {# todo Sarebbe meglio usare il costrutto {url view args} #}
+            <a href={% url 'travelGroup:modifytrip' trip_id=trip.id %}>Modify</a>
         </div>
     </div>
     {% endfor %}
