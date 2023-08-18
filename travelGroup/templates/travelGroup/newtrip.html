@@ -20,22 +20,15 @@
         {# new trip form #}
         <form action="" method="POST">
             {% csrf_token %}
-            <p>{{ newTripForm.name.label }}</p>
-            {{ newTripForm.name }}
-            <p>{{ newTripForm.destination.label }}</p>
-            {{ newTripForm.destination }}
-            <p>{{ newTripForm.departure_date.label }}</p>
-            <input type="date" name="{{ newTripForm.departure_date.name }}" value="{{ newTripForm.departure_date.value|default:'' }}">
-            <p>{{ newTripForm.arrival_date.label }}</p>
-            <input type="date" name="{{ newTripForm.arrival_date.name }}" value="{{ newTripForm.arrival_date.value|default:'' }}">       
-            
+            {{ newTripForm }}  
+
             <input id="activityButton" type="button" value="Add Activity">
             
             {# add activity formset #}
             <div id="activityFormset" style="display: none;">
                 {% for form in activity_formset %}
                     {{ activity_formset.management_form }}
-                    {{ form.as_table }}
+                    {{ form }}
                 {% endfor %}
             </div>
             
