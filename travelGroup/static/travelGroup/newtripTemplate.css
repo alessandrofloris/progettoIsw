@@ -39,3 +39,7 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background: #555;
 }
+
+.hidden{
+    display: none;
+}

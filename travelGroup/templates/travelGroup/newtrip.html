@@ -20,19 +20,30 @@
         {# new trip form #}
         <form action="" method="POST">
             {% csrf_token %}
-            {{ newTripForm }}  
-
-            <input id="activityButton" type="button" value="Add Activity">
+            <p>{{ newTripForm.name.label }}</p>
+            {{ newTripForm.name }}
+            <p>{{ newTripForm.destination.label }}</p>
+            {{ newTripForm.destination }}
+            <p>{{ newTripForm.departure_date.label }}</p>
+            <input type="date" name="{{ newTripForm.departure_date.name }}" value="{{ newTripForm.departure_date.value|default:'' }}">
+            <p>{{ newTripForm.arrival_date.label }}</p>
+            <input type="date" name="{{ newTripForm.arrival_date.name }}" value="{{ newTripForm.arrival_date.value|default:'' }}">   
             
             {# add activity formset #}
-            <div id="activityFormset" style="display: none;">
+            {{ activity_formset.management_form }}
+            <div id="activity_formset">
                 {% for form in activity_formset %}
-                    {{ activity_formset.management_form }}
-                    {{ form }}
+                    <div class="activity_form">
+                        {{ form.as_p }}
+                    </div>
                 {% endfor %}
             </div>
+
+            <input id="add_activity_button" type="button" value="Add Activity">
             
-            {# script to handle the "Add Activity" button#}
+            <div id="empty_form" class="hidden"> {{ activity_formset.empty_form }} </div>
+
+            {# script to handle the "Add Activity" button #}
             <script src="{% static 'travelGroup/activityButtonScript.js' %}"></script>
 
             <input type="submit" value="Create">
