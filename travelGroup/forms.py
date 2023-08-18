@@ -27,5 +27,16 @@ class TripForm(ModelForm):
     class Meta:
         model = Trip
         fields = '__all__'
+        widgets = {
+            'departure_date': forms.DateInput(attrs={'type': 'date'}),
+            'arrival_date': forms.DateInput(attrs={'type': 'date'}),
+        }
 
-ActivityFormSet = modelformset_factory(Activity, exclude=(), extra=0)
+class CustomDateInput(forms.DateInput):
+    input_type = 'date'
+
+ActivityFormSet = modelformset_factory(
+    Activity, 
+    exclude=(),
+    widgets = {'start_date': CustomDateInput(), 'end_date': CustomDateInput()},
+    extra=0)
