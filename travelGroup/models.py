@@ -40,6 +40,7 @@ class Activity(models.Model):
     def check_dates(self):
         return self.end_date >= self.start_date
 
+
 class Invitation(models.Model):
     id = models.AutoField(primary_key=True)
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -49,7 +50,8 @@ class Invitation(models.Model):
 
     # TODO: to check
     def __str__(self):
-        return "id: " + self.id + " state: " + self.state
+        return "Invitation id:" + str(self.id)
+
 
 class Comment(models.Model):
     id = models.AutoField(primary_key=True)
@@ -59,4 +61,8 @@ class Comment(models.Model):
 
     # TODO: to check
     def __str__(self):
-        return "id: " + self.id + " user: " + self.user + " trip: " + self.trip
+        # todo: commenti da eliminare
+        # il metodo __str__ in un model serve per dare una breve descrizione del record,
+        # non si dovrebbe esplicitare ogni campo
+        # vedere questo link https://stackoverflow.com/questions/45483417/what-is-doing-str-function-in-django
+        return "Comment id" + str(self.id)

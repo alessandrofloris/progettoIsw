@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .models import Trip
+from .models import Trip, User
 from .forms import TripForm, ActivityFormSet, RegistrationUserForm, LoginUserForm
 
 
@@ -23,8 +23,7 @@ def registration(request):
     context = {'registrationUserForm': form}
     return render(request, "travelGroup/registration.html", context)
 
-from .models import Trip, User
-from .forms import TripForm
+
 
 def index(request):
     return HttpResponse("This is the homepage! "
