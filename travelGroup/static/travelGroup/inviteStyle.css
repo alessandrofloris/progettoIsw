@@ -1,5 +1,6 @@
  *{
      background-color: #f0fbff;
+     border-radius: 5px;
  }
 
  input[type="submit"]{
@@ -14,14 +15,16 @@ option {
     padding: 10px; /* Spaziatura interna delle opzioni */
 }
 
+/*
  body{
      background-color: #acdcee;
+     height: auto;
  }
+ */
 
 .form input,  select{
     padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
+    margin: 20px 0 20px;
 }
 
  .box-buttons {
@@ -39,48 +42,21 @@ option {
      color: white;
      text-decoration: none;
      border: none;
-     border-radius: 5px;
      cursor: pointer;
  }
 
- .trip-list-table {
-    width: 100%;
-    height: auto;
+ .invitations-table{
+     width: 100%;
+ }
 
-    background: #fff;
-    border: 1px solid #000;
+ .invitations-table th, td {
+        text-align: center; /* Allinea il testo al centro */
+        padding: 8px; /* Aggiunge spaziatura interna alle celle */
+        border: 1px solid #dddddd; /* Aggiunge bordi alle celle */
+     border-radius: 5px;
+    }
 
-    padding: 0.5em;
+ .invitations-table th {
+        background-color: #acdcee; /* Sfondo grigio per l'intestazione */
+    }
 
-    box-sizing: border-box;
-}
-
-.trip-table-header {
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-.single-trip-container {
-    width: 100%;
-    height: 3em;
-
-    box-sizing: border-box;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.single-field-trip-container {
-    width: auto;
-    height: 100%;
-
-    text-align: center;
-
-    border: 1px solid #000;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1 1;
-}

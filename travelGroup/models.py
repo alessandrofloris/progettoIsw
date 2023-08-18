@@ -45,13 +45,13 @@ class Activity(models.Model):
 class Invitation(models.Model):
     id = models.AutoField(primary_key=True)
     sender = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Sender")
-    recipient = models.EmailField(max_length=254, unique=True, verbose_name="Recipient")
+    recipient = models.EmailField(max_length=254, verbose_name="Recipient")
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name="Trip's Invitation")
     state = models.BooleanField(default=False, verbose_name="State")
 
     # TODO: to check
     def __str__(self):
-        return "Invitation id:" + str(self.id)
+        return "Invitation for " + str(self.recipient) + " to " + str(self.trip)
 
 
 class Comment(models.Model):

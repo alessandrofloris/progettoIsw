@@ -1,7 +1,8 @@
 from django.forms import ModelForm, modelformset_factory
-from .models import Trip, User, Activity
+from .models import Trip, User, Activity, Invitation
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+
 
 class RegistrationUserForm(ModelForm):
     class Meta:

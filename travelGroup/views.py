@@ -1,6 +1,7 @@
+from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .models import Trip, User
+from .models import Trip, User, Invitation
 from .forms import TripForm, ActivityFormSet, RegistrationUserForm, LoginUserForm
 
 
@@ -75,9 +76,41 @@ def invite(request):
     user_list = User.objects.all()
     trip_list = Trip.objects.all()
 
+    # for testing purposes until the login is ready
+    invitation_list = get_user_invitations("topolino@gmail.com")
+    # invitation_list = get_user_invitations("@gmail.com")
+
     context = {
         "users": user_list,
-        "tripList": trip_list
+        "trips_list": trip_list,
+        "invitations_list": invitation_list
     }
 
     return render(request, "travelGroup/invite.html", context)
+
+
+def get_user_invitations(entered_email):
+    try:
+        invitation_list = Invitation.objects.filter(recipient=entered_email, state=False)
+        return invitation_list
+    except Invitation.DoesNotExist:
+        return None
+def invitation_form(request):
+    if request.method == 'POST':
+        sender_user = request.user   #Django's authentication
+        recipient_email = request.POST.get('recipient_email')
+        trip_id = request.POST.get('trip_id')  # id linked to the trip
+
+        try:
+            trip_instance = Trip.objects.get(id=trip_id)
+            invitation = Invitation.objects.create(sender=sender_user, recipient=recipient_email, trip=trip_instance)
+        except Trip.DoesNotExist:
+            #   TODO
+            # if the trip is chosen among the given options,
+            # then it never happens
+            pass
+        except IntegrityError:
+            #   TODO
+            # When there's an identical invitation
+            pass
+        return HttpResponseRedirect("invite")
