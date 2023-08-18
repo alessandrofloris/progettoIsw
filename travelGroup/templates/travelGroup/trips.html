@@ -10,7 +10,16 @@
 {% block header %}
 
     <header>
+        <div class="box-container">
+            <div class="button-container">
+                <a href="newtrip" type="button" class="button">HOME</a>
+            </div>
+            <div class="button-container">
+                <a href="#" class="button ">LOGOUT</a>
+            </div>
+        </div>
 
+        <!--
         <div class="button-container">
             <button class="button">
                 Home
@@ -22,7 +31,7 @@
                 Logout
             </button>
         </div>
-
+        -->
     </header>
 
 {% endblock %}
@@ -65,5 +74,28 @@
 {% else %}
     <p>No trip to show!</p>
 {% endif %}
+
+    <div class="box-container">
+        <div class="button-container">
+                <a href="invite" type="button" class="button">INVITA NUOVI PARTECIPANTI</a>
+            </div>
+        <div class="button-container">
+                <a href="#" class="button ">CHAT</a>
+        </div>
+    </div>
+
+    <!--
+    <div class="button-container">
+            <button class="button" >
+                INVITA NUOVI PARTECIPANTI
+            </button>
+        </div>
+
+    <div class="button-container">
+            <button class="button">
+                CHAT
+            </button>
+        </div>
+     -->
 
 {% endblock %}
