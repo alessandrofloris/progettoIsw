@@ -21,25 +21,11 @@
         <form action="" method="POST">
             {% csrf_token %}
             {{ newTripForm }}
-            
-            {# add activity formset #}
-            {{ activity_formset.management_form }}
-            <div id="activity_formset">
-                {% for form in activity_formset %}
-                    <div class="activity_form">
-                        {{ form.as_p }}
-                    </div>
-                {% endfor %}
+        
+            <div class="button-container">
+                <input type="submit" name="create_button" value="Create">
+                <input type="submit" name="create_add_button" value="Create and Add Activities">
             </div>
-
-            <input id="add_activity_button" type="button" value="Add Activity">
-            
-            <div id="empty_form" class="hidden"> {{ activity_formset.empty_form }} </div>
-
-            {# script to handle the "Add Activity" button #}
-            <script src="{% static 'travelGroup/activityButtonScript.js' %}"></script>
-
-            <input type="submit" value="Create">
         </form>
     </main>
 
