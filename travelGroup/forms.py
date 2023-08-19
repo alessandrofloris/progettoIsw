@@ -33,11 +33,12 @@ class TripForm(ModelForm):
             'arrival_date': forms.DateInput(attrs={'type': 'date'}),
         }
 
+
 class CustomDateInput(forms.DateInput):
     input_type = 'date'
 
 ActivityFormSet = modelformset_factory(
     Activity, 
-    exclude=(),
+    exclude=('trip',),
     widgets = {'start_date': CustomDateInput(), 'end_date': CustomDateInput()},
     extra=0)
