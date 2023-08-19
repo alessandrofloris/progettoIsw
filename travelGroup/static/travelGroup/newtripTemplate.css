@@ -43,3 +43,10 @@ input[type="submit"]:hover {
 .hidden{
     display: none;
 }
+
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Distribuisce gli spazi tra i bottoni */
+    align-items: center; /* Centra verticalmente i bottoni */
+    margin-top: 10px; /* Aggiunge un margine superiore per spazio */
+}
