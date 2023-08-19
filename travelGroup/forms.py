@@ -2,29 +2,8 @@ from django.forms import ModelForm, modelformset_factory
 from .models import Trip, CustomUser, Activity, Invitation
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-
-
-class RegistrationUserForm(ModelForm):
-    class Meta:
-        model = CustomUser
-        fields = ['username', 'first_name', 'last_name', 'email', 'password']
-        labels = {
-            "username": "username",
-            "first_name": "first_name",
-            "last_name": "last_name",
-            "email": "email",
-            "password": "password"
-        }
-
-
-class LoginUserForm(ModelForm):
-    class Meta:
-        model = CustomUser
-        fields = ['username', 'password']
-        labels = {
-            "username": "email",
-            "password": "password"
-        }
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
 class TripForm(ModelForm):
