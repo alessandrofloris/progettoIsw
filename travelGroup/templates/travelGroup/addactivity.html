@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Activity</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'travelGroup/newtripTemplate.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Add a new trip's activity!</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Activity Details</h2>
+        </section>
+        
+        <form action="" method="POST">
+            {% csrf_token %}
+            {# add activity formset #}
+            {{ activity_formset.management_form }}
+            <div id="activity_formset">
+                {% for form in activity_formset %}
+                    <div class="activity_form">
+                        {{ form.as_p }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <input id="add_activity_button" type="button" value="Add Activity">
+            
+            <div id="empty_form" class="hidden"> {{ activity_formset.empty_form }} </div>
+
+            {# script to handle the "Add Activity" button #}
+            <script src="{% static 'travelGroup/activityButtonScript.js' %}"></script>
+
+            <input type="submit" value="Add">
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 NoNameCompany. All rights reserved.</p>
+    </footer>
+</body>
+</html>
