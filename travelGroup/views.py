@@ -1,11 +1,12 @@
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from .models import Trip, User, Invitation
 from .forms import TripForm, ActivityFormSet, RegistrationUserForm, LoginUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 
 
 def login_page(request):
@@ -60,11 +61,25 @@ def newtrip(request):
     if request.method == "POST":
         form = TripForm(request.POST)
         if form.is_valid:
-            form.save()
-            return HttpResponseRedirect("mytrips")
+            if "create_button" in request.POST:
+                form.save()
+                return HttpResponseRedirect("mytrips")
+            elif "create_add_button" in request.POST:
+                form.save()
+                return HttpResponseRedirect("addactivity")
     else:
         form = TripForm()
     return render(request, "travelGroup/newtrip.html", {"newTripForm": form})
+
+def addactivity(request):
+    if request.method == "POST":
+        activity_formset = ActivityFormSet(request.POST)
+        if activity_formset.is_valid:
+            activity_formset.save()
+            return HttpResponseRedirect("mytrips")  # Redirect alla pagina "mytrips"
+    else:
+        activity_formset = ActivityFormSet()
+    return render(request, "travelGroup/addactivity.html", {"activity_formset": activity_formset})
 
 def modify_trip(request, trip_id):
     return HttpResponse("You want to modify the trip %s." % trip_id)
