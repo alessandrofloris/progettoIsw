@@ -47,7 +47,7 @@ def index(request):
                         "From here you'll be able to create a new trip group!")
 
 
-@login_required
+# @login_required
 def trips(request):
     trip_list = Trip.objects.all()
     context = {
@@ -55,41 +55,19 @@ def trips(request):
     }
     return render(request, "travelGroup/trips.html", context)
 
-
-@login_required
+# @login_required
 def newtrip(request):
     if request.method == "POST":
-        newtrip_form = TripForm(request.POST)
-        activity_formset = ActivityFormSet(request.POST)
-        newtrip_validation(newtrip_form)
-        # activity validation
+        form = TripForm(request.POST)
+        if form.is_valid:
+            form.save()
+            return HttpResponseRedirect("mytrips")
     else:
-        newtrip_form = TripForm()
-        activity_formset = ActivityFormSet()
-    return newtrip_render(request, newtrip_form, activity_formset)
-
-
-def newtrip_render(request, newtrip_form, activity_formset):
-    context = {"newTripForm": newtrip_form, "activity_formset": activity_formset}
-    return render(request, "travelGroup/newtrip.html", context)
-
-def newtrip_validation(form):
-    if form.is_valid():
-        return HttpResponseRedirect("mytrips")
-    else:
-        return HttpResponse("not a valid form!")
+        form = TripForm()
+    return render(request, "travelGroup/newtrip.html", {"newTripForm": form})
 
 def modify_trip(request, trip_id):
     return HttpResponse("You want to modify the trip %s." % trip_id)
-
-def addactivity_validation(form):
-    if form.is_valid():
-        form.save()
-        # HttpResponseRedirect to newtrip
-        return HttpResponse("ok")
-    else:
-        return HttpResponse("not a valid form!")
-
 
 def invite(request):
     user_list = User.objects.all()
