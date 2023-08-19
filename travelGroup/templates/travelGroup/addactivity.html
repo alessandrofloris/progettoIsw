@@ -29,14 +29,14 @@
                 {% endfor %}
             </div>
 
-            <input id="add_activity_button" type="button" value="Add Activity">
+            <input id="add_activity_button" type="button" value="New Activity">
             
             <div id="empty_form" class="hidden"> {{ activity_formset.empty_form }} </div>
 
             {# script to handle the "Add Activity" button #}
             <script src="{% static 'travelGroup/activityButtonScript.js' %}"></script>
 
-            <input type="submit" value="Add">
+            <input type="submit" value="Add to Itinerary">
         </form>
     </main>
 
