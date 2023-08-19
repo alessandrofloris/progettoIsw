@@ -16,10 +16,12 @@
 
         <form action="" method="POST">
             {% csrf_token %}
-            <p>{{ registrationUserForm.name.label }}</p>
-            {{ registrationUserForm.name }}
-            <p>{{ registrationUserForm.surname.label }}</p>
-            {{ registrationUserForm.surname }}
+            <p>{{ registrationUserForm.username.label }}</p>
+            {{ registrationUserForm.username }}
+            <p>{{ registrationUserForm.first_name.label }}</p>
+            {{ registrationUserForm.first_name }}
+            <p>{{ registrationUserForm.last_name.label }}</p>
+            {{ registrationUserForm.last_name }}
             <p>{{ registrationUserForm.email.label }}</p>
             <input type="email" value="">
             <p>{{ registrationUserForm.password.label }}</p>

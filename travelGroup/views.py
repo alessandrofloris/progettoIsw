@@ -1,7 +1,7 @@
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,redirect
-from .models import Trip, User, Invitation
+from .models import Trip, CustomUser, Invitation
 from .forms import TripForm, ActivityFormSet, RegistrationUserForm, LoginUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -10,14 +10,14 @@ from django.contrib.auth.decorators import login_required
 
 def login_page(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
 
-        user = authenticate(request, email=email, password=password)
+        user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
-            return redirect('trips')
+            return redirect('mytrips')
         else:
             messages.info(request, 'email or password incorrect')
 
@@ -92,7 +92,7 @@ def addactivity_validation(form):
 
 
 def invite(request):
-    user_list = User.objects.all()
+    user_list = CustomUser.objects.all()
     trip_list = Trip.objects.all()
 
     # for testing purposes until the login is ready
@@ -114,6 +114,7 @@ def get_user_invitations(entered_email):
         return invitation_list
     except Invitation.DoesNotExist:
         return None
+
 def invitation_form(request):
     if request.method == 'POST':
         sender_user = request.user   #Django's authentication

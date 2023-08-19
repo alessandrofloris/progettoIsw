@@ -1,28 +1,31 @@
 from django.forms import ModelForm, modelformset_factory
-from .models import Trip, User, Activity, Invitation
+from .models import Trip, CustomUser, Activity, Invitation
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
 
 class RegistrationUserForm(ModelForm):
     class Meta:
-        model = User
-        fields = ['name', 'surname', 'email', 'password']
+        model = CustomUser
+        fields = ['username', 'first_name', 'last_name', 'email', 'password']
         labels = {
-            "name": "name",
-            "surname": "surname",
+            "username": "username",
+            "first_name": "first_name",
+            "last_name": "last_name",
             "email": "email",
             "password": "password"
         }
 
+
 class LoginUserForm(ModelForm):
     class Meta:
-        model = User
-        fields = ['email', 'password']
+        model = CustomUser
+        fields = ['username', 'password']
         labels = {
-            "email": "email",
+            "username": "email",
             "password": "password"
         }
+
 
 class TripForm(ModelForm):
     class Meta:
@@ -33,8 +36,10 @@ class TripForm(ModelForm):
             'arrival_date': forms.DateInput(attrs={'type': 'date'}),
         }
 
+
 class CustomDateInput(forms.DateInput):
     input_type = 'date'
+
 
 ActivityFormSet = modelformset_factory(
     Activity, 
