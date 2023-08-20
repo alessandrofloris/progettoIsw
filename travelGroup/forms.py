@@ -6,6 +6,20 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
+class RegistrationUserForm(UserCreationForm):
+    class Meta(UserCreationForm):
+        model = get_user_model()
+        fields = ['username', 'first_name', 'last_name', 'email']
+        labels = {
+            "username": "username",
+            "name": "name",
+            "surname": "surname",
+            "first_name": "first_name",
+            "last_name": "last_name",
+            "email": "email",
+        }
+
+
 class TripForm(ModelForm):
     class Meta:
         model = Trip

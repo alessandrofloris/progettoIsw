@@ -7,7 +7,6 @@ from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
->>>>>>>>> Temporary merge branch 2
 
 
 def login_page(request):
