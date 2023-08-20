@@ -4,51 +4,50 @@ from django.shortcuts import render,redirect, get_object_or_404
 from .models import Trip, User, Invitation, Activity
 from .forms import TripForm, RegistrationUserForm, LoginUserForm, ActivityFormSet
 from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render,redirect
+from .models import Trip, CustomUser, Invitation
+from .forms import TripForm, ActivityFormSet, UserCreationForm, AuthenticationForm
+from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.conf import settings
 
 
 def login_page(request):
+    form = AuthenticationForm()
     if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        user = authenticate(request, email=email, password=password)
-
-        if user is not None:
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
             login(request, user)
-            return redirect('trips')
+            return redirect('/mytrips')
         else:
             messages.info(request, 'email or password incorrect')
 
-    context = {}
+    context = {'authenticationForm': form}
     return render(request, "travelGroup/login.html", context)
 
 
-@login_required
-def logout(request):
+@login_required()
+def logout_page(request):
     logout(request)
-    return redirect('loginPage')
+    return redirect(settings.LOGIN_REDIRECT_URL)
 
 
 def registration(request):
-    form = RegistrationUserForm()
+    form = UserCreationForm()
     if request.method == 'POST':
-        form = RegistrationUserForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Account created')
-    context = {'registrationUserForm': form}
+            return redirect(settings.LOGIN_REDIRECT_URL)
+
+    context = {'userCreationForm': form}
     return render(request, "travelGroup/registration.html", context)
 
 
-def index(request):
-    return HttpResponse("This is the homepage! "
-                        "From here you'll be able to create a new trip group!")
-
-
-# @login_required
+@login_required()
 def trips(request):
     trip_list = Trip.objects.all()
     context = {
@@ -56,7 +55,8 @@ def trips(request):
     }
     return render(request, "travelGroup/trips.html", context)
 
-# @login_required
+
+@login_required
 def newtrip(request):
     if request.method == "POST":
         form = TripForm(request.POST)
@@ -87,11 +87,21 @@ def addactivity(request, trip_id):
         activity_formset = ActivityFormSet(queryset=Activity.objects.filter(trip=trip))
     return render(request, "travelGroup/addactivity.html", {"activity_formset": activity_formset})
 
+
 def modify_trip(request, trip_id):
     return HttpResponse("You want to modify the trip %s." % trip_id)
 
+def addactivity_validation(form):
+    if form.is_valid():
+        form.save()
+        # HttpResponseRedirect to newtrip
+        return HttpResponse("ok")
+    else:
+        return HttpResponse("not a valid form!")
+
+
 def invite(request):
-    user_list = User.objects.all()
+    user_list = CustomUser.objects.all()
     trip_list = Trip.objects.all()
 
     # for testing purposes until the login is ready
@@ -113,6 +123,8 @@ def get_user_invitations(entered_email):
         return invitation_list
     except Invitation.DoesNotExist:
         return None
+
+
 def invitation_form(request):
     if request.method == 'POST':
         sender_user = request.user   #Django's authentication

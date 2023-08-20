@@ -1,41 +1,62 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    flex-direction: column;
+ *{
+     background-color: #f0fbff;
+     border-radius: 5px;
+ }
+
+ input[type="submit"]{
+     background-color: #fdb44b;
+     border: none;
+     border-radius: 5px;
+ }
+
+
+option {
+    font-size: 16px; /* Dimensione del testo delle opzioni */
+    padding: 10px; /* Spaziatura interna delle opzioni */
 }
 
-h1, h2 {
-    text-align: center;
+/*
+ body{
+     background-color: #acdcee;
+     height: auto;
+ }
+ */
+
+.form input,  select{
+    padding: 10px;
+    margin: 20px 0 20px;
 }
 
-form {
-    background: #f4f4f4;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    margin-top: 20px;
-}
+ .box-buttons {
+     display: flex;
+     justify-content: space-between; /* Allinea i bottoni ai lati opposti */
+     padding: 40px;
+     background-color: #475053;
+     margin: 10px 0 10px;
+ }
 
-label, input {
-    display: block;
-    margin-bottom: 10px;
-}
+ /* Stile simile a un bottone */
+ .button-link {
+     padding: 10px 20px;
+     background-color: #2e94b9;
+     color: white;
+     text-decoration: none;
+     border: none;
+     cursor: pointer;
+ }
 
-input[type="submit"] {
-    background: #333;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
+ .invitations-table{
+     width: 100%;
+ }
 
-input[type="submit"]:hover {
-    background: #555;
-}
+ .invitations-table th, td {
+        text-align: center; /* Allinea il testo al centro */
+        padding: 8px; /* Aggiunge spaziatura interna alle celle */
+        border: 1px solid #dddddd; /* Aggiunge bordi alle celle */
+     border-radius: 5px;
+    }
+
+ .invitations-table th {
+        background-color: #acdcee; /* Sfondo grigio per l'intestazione */
+    }
+

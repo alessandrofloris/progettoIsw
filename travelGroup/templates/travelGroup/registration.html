@@ -16,16 +16,11 @@
 
         <form action="" method="POST">
             {% csrf_token %}
-            <p>{{ registrationUserForm.name.label }}</p>
-            {{ registrationUserForm.name }}
-            <p>{{ registrationUserForm.surname.label }}</p>
-            {{ registrationUserForm.surname }}
-            <p>{{ registrationUserForm.email.label }}</p>
-            <input type="email" value="">
-            <p>{{ registrationUserForm.password.label }}</p>
-            <input type="password" value="">
-            <input type="submit" value="create">
+            {{userCreationForm.as_p}}
+            <input type="submit" value="signup">
         </form>
+
+        <p>You are already registered ? <a href="/">Login</a></p>
     </main>
 
     {% for message in messages %}
@@ -33,7 +28,6 @@
     {% endfor %}
 
     <footer>
-        <p>&copy; 2023 NoNameCompany. All rights reserved.</p>
     </footer>
 </body>
 
