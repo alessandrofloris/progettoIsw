@@ -11,9 +11,7 @@ class RegistrationUserForm(UserCreationForm):
         model = get_user_model()
         fields = ['username', 'first_name', 'last_name', 'email']
         labels = {
-            "username": "username",
-            "name": "name",
-            "surname": "surname",
+            "username" : "username",
             "first_name": "first_name",
             "last_name": "last_name",
             "email": "email",

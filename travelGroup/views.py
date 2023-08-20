@@ -2,7 +2,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,redirect
 from .models import Trip, CustomUser, Invitation
-from .forms import TripForm, ActivityFormSet, UserCreationForm, AuthenticationForm
+from .forms import TripForm, ActivityFormSet, RegistrationUserForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -31,14 +31,14 @@ def logout_page(request):
 
 
 def registration(request):
-    form = UserCreationForm()
+    form = RegistrationUserForm()
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegistrationUserForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect(settings.LOGIN_REDIRECT_URL)
 
-    context = {'userCreationForm': form}
+    context = {'registrationUserForm': form}
     return render(request, "travelGroup/registration.html", context)
 
 
