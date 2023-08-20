@@ -1,17 +1,13 @@
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render,redirect, get_object_or_404
-from .models import Trip, User, Invitation, Activity
-from .forms import TripForm, RegistrationUserForm, LoginUserForm, ActivityFormSet
-from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render,redirect
 from .models import Trip, CustomUser, Invitation
 from .forms import TripForm, ActivityFormSet, UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
 from django.conf import settings
+>>>>>>>>> Temporary merge branch 2
 
 
 def login_page(request):
@@ -56,49 +52,32 @@ def trips(request):
     return render(request, "travelGroup/trips.html", context)
 
 
-@login_required
 def newtrip(request):
     if request.method == "POST":
         form = TripForm(request.POST)
         if form.is_valid:
             if "create_button" in request.POST:
                 form.save()
-                return HttpResponseRedirect(reverse('travelGroup:mytrips'))
+                return HttpResponseRedirect("mytrips")
             elif "create_add_button" in request.POST:
-                new_trip = form.save()
-                url = "addactivity/" + str(new_trip.id)
-                return HttpResponseRedirect(url)
+                form.save()
+                return HttpResponseRedirect("addactivity")
     else:
         form = TripForm()
     return render(request, "travelGroup/newtrip.html", {"newTripForm": form})
 
-def addactivity(request, trip_id):
-    trip = get_object_or_404(Trip, id=trip_id)
-
-    if request.method == "POST":
-        activity_formset = ActivityFormSet(request.POST, queryset=Activity.objects.filter(trip=trip))
-        if activity_formset.is_valid():
-            instances = activity_formset.save(commit=False)
-            for instance in instances:
-                instance.trip = trip
-                instance.save()
-            return HttpResponseRedirect(reverse('travelGroup:mytrips'))
-    else:
-        activity_formset = ActivityFormSet(queryset=Activity.objects.filter(trip=trip))
-    return render(request, "travelGroup/addactivity.html", {"activity_formset": activity_formset})
-
-
 def modify_trip(request, trip_id):
     return HttpResponse("You want to modify the trip %s." % trip_id)
 
-def addactivity_validation(form):
-    if form.is_valid():
-        form.save()
-        # HttpResponseRedirect to newtrip
-        return HttpResponse("ok")
+def addactivity(request):
+    if request.method == "POST":
+        activity_formset = ActivityFormSet(request.POST)
+        if activity_formset.is_valid:
+            activity_formset.save()
+            return HttpResponseRedirect("mytrips")  # Redirect alla pagina "mytrips"
     else:
-        return HttpResponse("not a valid form!")
-
+        activity_formset = ActivityFormSet()
+    return render(request, "travelGroup/addactivity.html", {"activity_formset": activity_formset})
 
 def invite(request):
     user_list = CustomUser.objects.all()
