@@ -42,7 +42,7 @@ def registration(request):
     return render(request, "travelGroup/registration.html", context)
 
 
-@login_required()
+# @login_required()
 def trips(request):
     trip_list = Trip.objects.all()
     context = {
@@ -51,43 +51,32 @@ def trips(request):
     return render(request, "travelGroup/trips.html", context)
 
 
-@login_required()
 def newtrip(request):
     if request.method == "POST":
-        newtrip_form = TripForm(request.POST)
-        activity_formset = ActivityFormSet(request.POST)
-        newtrip_validation(newtrip_form)
-        # activity validation
+        form = TripForm(request.POST)
+        if form.is_valid:
+            if "create_button" in request.POST:
+                form.save()
+                return HttpResponseRedirect("mytrips")
+            elif "create_add_button" in request.POST:
+                form.save()
+                return HttpResponseRedirect("addactivity")
     else:
-        newtrip_form = TripForm()
-        activity_formset = ActivityFormSet()
-    return newtrip_render(request, newtrip_form, activity_formset)
-
-
-def newtrip_render(request, newtrip_form, activity_formset):
-    context = {"newTripForm": newtrip_form, "activity_formset": activity_formset}
-    return render(request, "travelGroup/newtrip.html", context)
-
-
-def newtrip_validation(form):
-    if form.is_valid():
-        return HttpResponseRedirect("mytrips")
-    else:
-        return HttpResponse("not a valid form!")
-
+        form = TripForm()
+    return render(request, "travelGroup/newtrip.html", {"newTripForm": form})
 
 def modify_trip(request, trip_id):
     return HttpResponse("You want to modify the trip %s." % trip_id)
 
-
-def addactivity_validation(form):
-    if form.is_valid():
-        form.save()
-        # HttpResponseRedirect to newtrip
-        return HttpResponse("ok")
+def addactivity(request):
+    if request.method == "POST":
+        activity_formset = ActivityFormSet(request.POST)
+        if activity_formset.is_valid:
+            activity_formset.save()
+            return HttpResponseRedirect("mytrips")  # Redirect alla pagina "mytrips"
     else:
-        return HttpResponse("not a valid form!")
-
+        activity_formset = ActivityFormSet()
+    return render(request, "travelGroup/addactivity.html", {"activity_formset": activity_formset})
 
 def invite(request):
     user_list = CustomUser.objects.all()
