@@ -3,26 +3,21 @@
      border-radius: 5px;
  }
 
+ /*
  input[type="submit"]{
      background-color: #fdb44b;
      border: none;
      border-radius: 5px;
  }
-
-
-option {
-    font-size: 16px; /* Dimensione del testo delle opzioni */
-    padding: 10px; /* Spaziatura interna delle opzioni */
-}
-
-/*
- body{
-     background-color: #acdcee;
-     height: auto;
- }
  */
 
-.form input,  select{
+option {
+    font-size: 16px;
+    padding: 10px;
+}
+
+
+input,  select{
     padding: 10px;
     margin: 20px 0 20px;
 }
@@ -50,13 +45,24 @@ option {
  }
 
  .invitations-table th, td {
-        text-align: center; /* Allinea il testo al centro */
-        padding: 8px; /* Aggiunge spaziatura interna alle celle */
-        border: 1px solid #dddddd; /* Aggiunge bordi alle celle */
-     border-radius: 5px;
-    }
+        text-align: center;
+        padding: 8px;
+        border: 1px solid #dddddd;
+        border-radius: 5px;
+ }
 
  .invitations-table th {
         background-color: #acdcee; /* Sfondo grigio per l'intestazione */
     }
 
+.button-accept{
+    background-color: #42b883;
+}
+
+.button-reject{
+    background-color: #fa7f7f;
+}
+
+.button-invite{
+    background-color: #fdb44b;
+}

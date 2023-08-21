@@ -14,51 +14,38 @@
         <a href="mytrips" class="button-link">I MIEI VIAGGI</a>
     </div>
 
-    <form class="form" action="" method="post">
+    {{  request.user.email }}
+
+    <form class="form" action="" method="POST">
         {% csrf_token %}
-        {{ invitation_form }}
+        {{ form.as_p }}
 
-        <fieldset>
-        <label for="email"> Email </label>
-            <select>
-                <option value="" selected></option>
-                {% for user in users %}
-                <option>{{ user.email }}</option>
-                {% endfor %}
-            </select>
-        <br>
-
-        <label for="tripname"> Nome viaggio </label>
-            <select>
-                <option value="" selected></option>
-                {% for trip in trip_list %}
-                <option>{{ trip.name }}</option>
-                {% endfor %}
-            </select>
-        <br>
-
-        <input type="submit" value="INVITA">
-
-        </fieldset>
+            <input type="submit" class="button-link button-invite" value="INVITA">
+            <!-- <button type="submit" class="button-link button-invite" value="">INVITA</button> -->
+       <!-- </fieldset> -->
     </form>
+
 
     <table class="invitations-table">
         <caption><h3>I miei inviti</h3></caption>
         <tr>
-            <th>ID</th>
-            <th>Sender</th>
-            <th>Recipient</th>
-            <th>Trip</th>
+            <th>Mittente</th>
+            <!-- <th>Destinatario</th> -->
+            <th>Viaggio</th>
             <th>State</th>
         </tr>
     {% if invitations_list %}
         {% for invitation in invitations_list %}
             <tr>
-                <td>{{ invitation.id }}</td>
+                <!-- <td>{{ invitation.id }}</td> -->
                 <td>{{ invitation.sender }}</td>
-                <td>{{ invitation.recipient }}</td>
+                <!-- <td>{{ invitation.recipient }}</td> -->
                 <td>{{ invitation.trip }}</td>
-                <td>{{ invitation.state }}</td>
+                <!-- <td> {{ invitation.state }}</td> -->
+                <td>
+                    <button type="submit" class="button-accept button-link">Accetta</button>
+                    <button type="submit" class="button-reject button-link" name="action" value="reject">Rifiuta</button>
+                </td>
             </tr>
         {% endfor %}
     {% else %}

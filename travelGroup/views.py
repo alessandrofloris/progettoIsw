@@ -1,8 +1,8 @@
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from .models import Trip, CustomUser, Invitation
-from .forms import TripForm, ActivityFormSet, RegistrationUserForm, AuthenticationForm
+from .forms import TripForm, ActivityFormSet, RegistrationUserForm, AuthenticationForm, InvitationForm
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -44,7 +44,7 @@ def registration(request):
 
 @login_required()
 def trips(request):
-    trip_list = Trip.objects.all()
+    trip_list = Trip.objects.filter(participants=request.user)
     context = {
         "tripList": trip_list
     }
@@ -54,9 +54,13 @@ def trips(request):
 def newtrip(request):
     if request.method == "POST":
         form = TripForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             if "create_button" in request.POST:
-                form.save()
+                trip = form.save(commit=False)
+                trip.save()
+                trip.participants.add(request.user)
+                trip.save()
+
                 return HttpResponseRedirect("mytrips")
             elif "create_add_button" in request.POST:
                 form.save()
@@ -78,51 +82,33 @@ def addactivity(request):
         activity_formset = ActivityFormSet()
     return render(request, "travelGroup/addactivity.html", {"activity_formset": activity_formset})
 
+
+
 def invite(request):
-    user_list = CustomUser.objects.all()
-    trip_list = Trip.objects.all()
+    current_user = request.user
 
     # for testing purposes until the login is ready
-    invitation_list = get_user_invitations("topolino@gmail.com")
-    # invitation_list = get_user_invitations("@gmail.com")
+    invitations_list = Invitation.objects.filter(recipient=current_user.email, state=False)
 
-    context = {
-        "users": user_list,
-        "trips_list": trip_list,
-        "invitations_list": invitation_list
-    }
-
-    return render(request, "travelGroup/invite.html", context)
-
-
-def get_user_invitations(entered_email):
-    try:
-        invitation_list = Invitation.objects.filter(recipient=entered_email, state=False)
-        return invitation_list
-    except Invitation.DoesNotExist:
-        return None
-
-
-def invitation_form(request):
     if request.method == 'POST':
-        sender_user = request.user   #Django's authentication
-        recipient_email = request.POST.get('recipient_email')
-        trip_id = request.POST.get('trip_id')  # id linked to the trip
+        form = InvitationForm(request.POST)
+        if form.is_valid():
+            sender_user = request.user
+            recipient_email = form.cleaned_data['recipient_email']
+            trip = form.cleaned_data['trip']
 
-        try:
-            trip_instance = Trip.objects.get(id=trip_id)
-            invitation = Invitation.objects.create(sender=sender_user, recipient=recipient_email, trip=trip_instance)
-        except Trip.DoesNotExist:
-            #   TODO
-            # if the trip is chosen among the given options,
-            # then it never happens
-            pass
-        except IntegrityError:
-            #   TODO
-            # When there's an identical invitation
-            pass
-        return HttpResponseRedirect("invite")
+            try:
+                invitation = Invitation.objects.create(sender=sender_user, recipient=recipient_email, trip=trip)
+                invitation.save()
+            except IntegrityError:
+                return HttpResponse("You already made an identical invitation for this user")
 
+            return HttpResponseRedirect("invite")  # Reindirizza l'utente a una pagina di conferma
+
+    else:
+        form = InvitationForm()
+
+    return render(request, 'travelGroup/invite.html', {'form': form, 'invitations_list': invitations_list})
 
 def view_trip(request, trip_id):
 

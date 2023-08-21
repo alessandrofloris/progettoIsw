@@ -6,6 +6,15 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
+class InvitationForm(forms.Form):
+    class Meta:
+        model = Invitation
+        fields = ['recipient']
+
+    recipient_email = forms.EmailField(label='Email')
+    trip = forms.ModelChoiceField(queryset=Trip.objects.all(), label='Nome viaggio')
+
+
 class RegistrationUserForm(UserCreationForm):
     class Meta(UserCreationForm):
         model = get_user_model()
@@ -22,6 +31,7 @@ class TripForm(ModelForm):
     class Meta:
         model = Trip
         fields = '__all__'
+        exclude = ['participants']  # Rimuovi completamente il campo participants dal form
         widgets = {
             'departure_date': forms.DateInput(attrs={'type': 'date'}),
             'arrival_date': forms.DateInput(attrs={'type': 'date'}),

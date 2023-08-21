@@ -81,7 +81,11 @@
             {{ trip.arrival_date }}
         </div>
         <div class="single-field-trip-container">
-            {{ trip.participants.count }} participants
+
+            {% for participant in trip.participants.all %}
+                <li>{{ participant.username }}</li>
+            {% endfor %}
+
         </div>
         <div class="single-field-trip-container">
             {{ trip.activity_set.count }} activities
