@@ -49,7 +49,7 @@
             <h3 class="field-label">Participants:</h3>
             {% if participants.count > 0 %}
                 {% for participant in participants %}
-                    <p class="field-content">{{ participant.name }} {{ participant.surname }}</p>
+                    <p class="field-content">{{ participant.first_name }} {{ participant.last_name }}</p>
                 {% endfor %}
             {% else %}
                 <p class="field-content">This trip has no participants</p>
@@ -74,6 +74,22 @@
             {% endif %}
         </div>
 
+
+        <div class="field_container">
+            <h3 class="field-label">Commenti:</h3>
+            {% if comments.count > 0 %}
+                {% for comment in comments %}
+                    <p class="field-content">{{ comment.user.username }}: {{ comment.content }}</p>
+                {% endfor %}
+            {% else %}
+                <p class="field-content">Nessun commento!</p>
+            {% endif %}
+        </div>
+        <form action="{% url 'travelGroup:add_comment' trip.id %}" method="post">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit" name="add_comment" > AGGIUNGI COMMENTO</button>
+        </form>
     </div>
 
 {% endblock %}

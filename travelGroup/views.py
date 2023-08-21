@@ -1,8 +1,8 @@
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .models import Trip, CustomUser, Invitation
-from .forms import TripForm, ActivityFormSet, RegistrationUserForm, AuthenticationForm, InvitationForm
+from .models import Trip, CustomUser, Invitation, Comment
+from .forms import TripForm, ActivityFormSet, RegistrationUserForm, AuthenticationForm, InvitationForm, CommentForm
 from django.contrib.auth import login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -92,6 +92,7 @@ def invite(request):
 
     if request.method == 'POST':
         form = InvitationForm(request.user, request.POST)
+
         if form.is_valid():
             sender_user = request.user
             recipient_email = form.cleaned_data['recipient_email']
@@ -103,19 +104,20 @@ def invite(request):
             except IntegrityError:
                 return HttpResponse("You already made an identical invitation for this user")
 
-            return HttpResponseRedirect("invite")  # Reindirizza l'utente a una pagina di conferma
+            return HttpResponseRedirect("invite")
 
     else:
-        form = InvitationForm(request.user, request.POST)
+        form = InvitationForm(request.user)
 
     return render(request, 'travelGroup/invite.html', {'form': form, 'invitations_list': invitations_list})
 
 
+def process_invitation(request, invitation_id):
 
-def accetta_invito(request, invitation_id):
     try:
         invitation = Invitation.objects.get(pk=invitation_id)
-        if not invitation.state:  # Verifica che l'invito non sia già stato accettato in precedenza
+
+        if "accept" in request.POST:
             trip = invitation.trip
             user = request.user
 
@@ -126,20 +128,43 @@ def accetta_invito(request, invitation_id):
             invitation.state = True
             invitation.save()
 
+        if "decline" in request.POST:
+            invitation.delete()
+
     except Invitation.DoesNotExist:
         pass
 
     return redirect('travelGroup:mytrips')
 
+
 def view_trip(request, trip_id):
+
+    comment_form = CommentForm()
 
     trip = Trip.objects.get(id=trip_id)
     participants = trip.participants.all()
     activities = trip.activity_set.all()
+    comments = Comment.objects.filter(trip=trip)
 
     context = {
         "trip": trip,
         "participants": participants,
-        "activities": activities
+        "activities": activities,
+        "comments": comments
     }
-    return render(request, "travelGroup/tripdetails.html", context)
+    # return render(request, "travelGroup/tripdetails.html", context)
+    return render(request, "travelGroup/tripdetails.html", {"comment_form": comment_form, **context})
+
+def add_comment(request, trip_id):
+    current_user = request.user
+    trip = Trip.objects.get(id=trip_id)
+
+    if request.method == "POST":
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            content = comment_form.cleaned_data['content']
+            new_comment = Comment.objects.create(content=content, user=current_user, trip=trip)
+            new_comment.save()
+
+    # Utilizza la funzione `redirect` per tornare alla pagina precedente
+    return redirect(request.META.get('HTTP_REFERER', 'mytrips'))

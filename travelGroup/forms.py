@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
 class InvitationForm(forms.Form):
-    recipient_email = forms.EmailField(label='Email')
+    recipient_email = forms.EmailField(label='Email', widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
     trip = forms.ModelChoiceField(queryset=None, label='Nome viaggio')
 
     def __init__(self, user, *args, **kwargs):
@@ -19,6 +19,8 @@ class InvitationForm(forms.Form):
         # Crea un campo di scelta per i viaggi
         self.fields['trip'].queryset = trips
 
+class CommentForm(forms.Form):
+    content = forms.CharField(widget=forms.Textarea)
 
 class RegistrationUserForm(UserCreationForm):
     class Meta(UserCreationForm):

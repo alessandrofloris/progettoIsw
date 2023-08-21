@@ -13,5 +13,6 @@ urlpatterns = [
     path("logout", views.logout_page, name='logout'),
     path("invite", views.invite),
     path("viewtrip/<int:trip_id>", views.view_trip, name='viewtrip'),
-    path('accetta_invito/<int:invitation_id>/', views.accetta_invito, name='accetta_invito'),
+    path('process_invitation/<int:invitation_id>/', views.process_invitation, name='process_invitation'),
+    path('add_comment/<int:trip_id>/', views.add_comment, name='add_comment'),
 ]
