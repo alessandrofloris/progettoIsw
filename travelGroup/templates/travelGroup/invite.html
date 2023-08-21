@@ -43,7 +43,11 @@
                 <td>{{ invitation.trip }}</td>
                 <!-- <td> {{ invitation.state }}</td> -->
                 <td>
-                    <button type="submit" class="button-accept button-link">Accetta</button>
+                    <form action="{% url 'travelGroup:accetta_invito' invitation.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="button-accept button-link">Accetta</button>
+                    </form>
+
                     <button type="submit" class="button-reject button-link" name="action" value="reject">Rifiuta</button>
                 </td>
             </tr>

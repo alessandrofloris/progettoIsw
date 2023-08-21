@@ -91,7 +91,7 @@ def invite(request):
     invitations_list = Invitation.objects.filter(recipient=current_user.email, state=False)
 
     if request.method == 'POST':
-        form = InvitationForm(request.POST)
+        form = InvitationForm(request.user, request.POST)
         if form.is_valid():
             sender_user = request.user
             recipient_email = form.cleaned_data['recipient_email']
@@ -106,9 +106,30 @@ def invite(request):
             return HttpResponseRedirect("invite")  # Reindirizza l'utente a una pagina di conferma
 
     else:
-        form = InvitationForm()
+        form = InvitationForm(request.user, request.POST)
 
     return render(request, 'travelGroup/invite.html', {'form': form, 'invitations_list': invitations_list})
+
+
+
+def accetta_invito(request, invitation_id):
+    try:
+        invitation = Invitation.objects.get(pk=invitation_id)
+        if not invitation.state:  # Verifica che l'invito non sia già stato accettato in precedenza
+            trip = invitation.trip
+            user = request.user
+
+            # Aggiungi l'utente come partecipante al viaggio
+            trip.participants.add(user)
+
+            # Imposta lo stato su True per accettare l'invito
+            invitation.state = True
+            invitation.save()
+
+    except Invitation.DoesNotExist:
+        pass
+
+    return redirect('travelGroup:mytrips')
 
 def view_trip(request, trip_id):
 

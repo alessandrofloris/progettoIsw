@@ -7,12 +7,17 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
 class InvitationForm(forms.Form):
-    class Meta:
-        model = Invitation
-        fields = ['recipient']
-
     recipient_email = forms.EmailField(label='Email')
-    trip = forms.ModelChoiceField(queryset=Trip.objects.all(), label='Nome viaggio')
+    trip = forms.ModelChoiceField(queryset=None, label='Nome viaggio')
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Ottieni tutti i viaggi in cui l'utente loggato è un partecipante
+        trips = Trip.objects.filter(participants=user)
+
+        # Crea un campo di scelta per i viaggi
+        self.fields['trip'].queryset = trips
 
 
 class RegistrationUserForm(UserCreationForm):

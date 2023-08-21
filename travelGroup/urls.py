@@ -13,4 +13,5 @@ urlpatterns = [
     path("logout", views.logout_page, name='logout'),
     path("invite", views.invite),
     path("viewtrip/<int:trip_id>", views.view_trip, name='viewtrip'),
+    path('accetta_invito/<int:invitation_id>/', views.accetta_invito, name='accetta_invito'),
 ]
