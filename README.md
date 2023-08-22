@@ -15,5 +15,5 @@
 - Giacomo Lecis
   - Da creare
 - Alessio Scanu
-  - username: alessio_scanu
+  - username: alessio__scanu
   - password: prova12345
