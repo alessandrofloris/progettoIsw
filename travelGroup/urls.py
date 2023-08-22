@@ -5,7 +5,7 @@ from . import views
 app_name = "travelGroup"
 urlpatterns = [
     path("mytrips", views.trips, name="mytrips"),
-    path("newtrip", views.newtrip),
+    path("newtrip", views.newtrip, name="newtrip"),
     path("addactivity/<int:trip_id>", views.addactivity, name='addactivity'),
     path("modifytrip/<int:trip_id>", views.modify_trip, name='modifytrip'),
     path("", views.login_page, name='login'),
