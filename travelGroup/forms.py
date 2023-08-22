@@ -13,10 +13,10 @@ class InvitationForm(forms.Form):
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Ottieni tutti i viaggi in cui l'utente loggato è un partecipante
+        # the method returns all the trips where the logged user is a partecipant
         trips = Trip.objects.filter(participants=user)
 
-        # Crea un campo di scelta per i viaggi
+        # new field to choose a trip
         self.fields['trip'].queryset = trips
 
 class CommentForm(forms.Form):
@@ -38,7 +38,7 @@ class TripForm(ModelForm):
     class Meta:
         model = Trip
         fields = '__all__'
-        exclude = ['participants']  # Rimuovi completamente il campo participants dal form
+        exclude = ['participants']
         widgets = {
             'departure_date': forms.DateInput(attrs={'type': 'date'}),
             'arrival_date': forms.DateInput(attrs={'type': 'date'}),
