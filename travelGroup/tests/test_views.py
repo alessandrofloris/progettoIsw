@@ -73,6 +73,9 @@ class NewTripViewTestCase(TestCase):
             'create_add_button': True
         }
 
+        # test user login
+        self.client.login(username='testuser', password='testpassword')
+
         response = self.client.post(reverse('travelGroup:newtrip'), data)
 
         self.assertEqual(response.status_code, 302)
