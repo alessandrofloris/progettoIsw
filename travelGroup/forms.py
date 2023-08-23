@@ -1,4 +1,4 @@
-from django.forms import ModelForm, modelformset_factory
+from django.forms import ModelForm
 from .models import Trip, CustomUser, Activity, Invitation
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
@@ -44,13 +44,12 @@ class TripForm(ModelForm):
             'arrival_date': forms.DateInput(attrs={'type': 'date'}),
         }
 
-
-class CustomDateInput(forms.DateInput):
-    input_type = 'date'
-
-
-ActivityFormSet = modelformset_factory(
-    Activity, 
-    exclude=('trip',),
-    widgets = {'start_date': CustomDateInput(), 'end_date': CustomDateInput()},
-    extra=1)
+class ActivityForm(ModelForm):
+    class Meta:
+        model = Activity
+        fields = '__all__'
+        exclude = ['trip']
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }
