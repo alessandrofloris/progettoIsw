@@ -57,14 +57,17 @@ def newtrip(request):
         form = TripForm(request.POST)
         if form.is_valid():
             if "create_button" in request.POST:
-                trip = form.save(commit=False)
-                trip.save()
-                trip.participants.add(request.user)
-                trip.save()
+                new_trip = form.save(commit=False)
+                new_trip.save()
+                new_trip.participants.add(request.user)
+                new_trip.save()
 
                 return HttpResponseRedirect(reverse('travelGroup:mytrips'))
             elif "create_add_button" in request.POST:
-                new_trip = form.save()
+                new_trip = form.save(commit=False)
+                new_trip.save()
+                new_trip.participants.add(request.user)
+                new_trip.save()
                 url = "addactivity/" + str(new_trip.id)
                 return HttpResponseRedirect(url)
     else:
@@ -74,7 +77,14 @@ def newtrip(request):
 def addactivity(request, trip_id):
     trip = get_object_or_404(Trip, id=trip_id)
     if request.method == "POST":
+
         activity_formset = ActivityFormSet(request.POST, queryset=Activity.objects.filter(trip=trip))
+
+        # Mark all fields as required
+        for form in activity_formset:
+            for field_name, field in form.fields.items():
+                field.required = True
+
         if activity_formset.is_valid():
             instances = activity_formset.save(commit=False)
             for instance in instances:
