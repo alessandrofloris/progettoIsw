@@ -1,8 +1,7 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 from travelGroup.models import Trip, CustomUser, Activity
-from travelGroup.forms import ActivityFormSet
-from travelGroup.views import addactivity
+from travelGroup.forms import ActivityForm
 
 # --- Test Visualizza Viaggi ---
 
@@ -48,7 +47,6 @@ class NewTripViewTestCase(TestCase):
             'create_button': True
         }
 
-        
         response = self.client.post(reverse('travelGroup:newtrip'), data)
 
         self.assertEqual(response.status_code, 302)
@@ -79,4 +77,12 @@ class NewTripViewTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, 'addactivity/' + data['id'])
 
+        trip = Trip.objects.get(name='My Trip')
+        self.assertEqual(trip.name, 'My Trip')
+        self.assertEqual(trip.destination, 'My Destination')
+        self.assertEqual(str(trip.departure_date), '2023-08-01')
+        self.assertEqual(str(trip.arrival_date), '2023-08-10')
+        self.assertIn(self.user, trip.participants.all())
 
+
+# --- Add Activity View Tests ---
