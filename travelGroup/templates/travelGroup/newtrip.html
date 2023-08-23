@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Trip</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'travelGroup/newtripTemplate.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Create a new trip to share with your friends!</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>New Trip Details</h2>
+        </section>
+        
+        {# new trip form #}
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ newTripForm }}
+        
+            <div class="button-container">
+                <input type="submit" name="create_button" value="Create">
+                <input type="submit" name="create_add_button" value="Create and Add Activities">
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 NoNameCompany. All rights reserved.</p>
+    </footer>
+</body>
+</html>

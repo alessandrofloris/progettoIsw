@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Activity</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'travelGroup/newtripTemplate.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Add a new trip's activity!</h1>
+    </header>
+
+    <main>
+        <section>
+            <h2>Activity Details</h2>
+        </section>
+        
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ addActivityForm }}
+            
+            <input type="submit" value="Add to Itinerary">
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 NoNameCompany. All rights reserved.</p>
+    </footer>
+</body>
+</html>

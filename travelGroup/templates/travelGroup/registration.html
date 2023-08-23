@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Trip</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'travelGroup/registration.css' %}">
+</head>
+<body>
+
+<main>
+        <section>
+            <h2></h2>
+        </section>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{registrationUserForm.as_p}}
+            <input type="submit" value="signup">
+        </form>
+
+        <p>You are already registered ? <a href="/">Login</a></p>
+    </main>
+
+    {% for message in messages %}
+        <p id="">{{message}}}</p>
+    {% endfor %}
+
+    <footer>
+    </footer>
+</body>
+
+
+</body>
+</html>

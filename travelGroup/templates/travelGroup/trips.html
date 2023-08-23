@@ -1,0 +1,115 @@
+{% extends "travelGroup/base.html" %}
+
+{% block extra-head %}
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'travelGroup/tripsTemplate.css' %}">
+
+{% endblock %}
+
+{% block header %}
+
+    <header>
+        <div class="box-container">
+            <div class="button-container">
+                <a href="newtrip" type="button" class="button">HOME</a>
+            </div>
+            <div class="button-container">
+                <a href="/logout" class="button ">LOGOUT</a>
+            </div>
+        </div>
+    </header>
+
+{% endblock %}
+
+{% block main-content %}
+
+    {% if tripList %}
+    <div class="trip-list-table">
+    <div class="single-trip-container ">
+        <div class="single-field-trip-container trip-table-header">
+            Trip Name
+        </div>
+        <div class="single-field-trip-container trip-table-header">
+            Trip Destination
+        </div>
+        <div class="single-field-trip-container trip-table-header">
+            Departure Date
+        </div>
+        <div class="single-field-trip-container trip-table-header">
+            Arrival Date
+        </div>
+        <div class="single-field-trip-container trip-table-header">
+            Participants
+        </div>
+        <div class="single-field-trip-container trip-table-header">
+            Itinerary
+        </div>
+        <div class="single-field-trip-container trip-table-header">
+            View Trip
+        </div>
+        <div class="single-field-trip-container trip-table-header">
+            Modify Trip
+        </div>
+    </div>
+    {% for trip in tripList %}
+        <div class="single-trip-container">
+        <div class="single-field-trip-container">
+            {{ trip.name }}
+        </div>
+        <div class="single-field-trip-container">
+            {{ trip.destination }}
+        </div>
+        <div class="single-field-trip-container">
+            {{ trip.departure_date }}
+        </div>
+        <div class="single-field-trip-container">
+            {{ trip.arrival_date }}
+        </div>
+        <div class="single-field-trip-container">
+
+            {% for participant in trip.participants.all %}
+                <li>{{ participant.username }}</li>
+            {% endfor %}
+
+        </div>
+        <div class="single-field-trip-container">
+            {{ trip.activity_set.count }} activities
+        </div>
+        <div class="single-field-trip-container">
+            <a href={% url 'travelGroup:viewtrip' trip_id=trip.id %}>View</a>
+        </div>
+        <div class="single-field-trip-container">
+            <a href={% url 'travelGroup:modifytrip' trip_id=trip.id %}>Modify</a>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+{% else %}
+    <p>No trip to show!</p>
+{% endif %}
+
+    <div class="box-container">
+        <div class="button-container">
+                <a href="invite" type="button" class="button">INVITA NUOVI PARTECIPANTI</a>
+            </div>
+        <div class="button-container">
+                <a href="#" class="button ">CHAT</a>
+        </div>
+    </div>
+
+    <!--
+    <div class="button-container">
+            <button class="button" >
+                INVITA NUOVI PARTECIPANTI
+            </button>
+        </div>
+
+    <div class="button-container">
+            <button class="button">
+                CHAT
+            </button>
+        </div>
+     -->
+
+{% endblock %}
