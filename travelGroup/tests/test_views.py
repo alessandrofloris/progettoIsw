@@ -1,6 +1,8 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from travelGroup.models import Trip, CustomUser
+from travelGroup.models import Trip, CustomUser, Activity
+from travelGroup.forms import ActivityFormSet
+from travelGroup.views import addactivity
 
 # --- Test Visualizza Viaggi ---
 
@@ -31,7 +33,8 @@ class NewTripViewTestCase(TestCase):
         self.client = Client()
         # test user creation
         self.user = CustomUser.objects.create_user(username='testuser', first_name='test', last_name='user', email='testemail@email.com', password='testpassword')
-
+        # test user login
+        self.client.login(username='testuser', password='testpassword')
 
     # Test the creation of a new trip using the 'create' button in the new trip form.
     # After form submission, the user should be redirected to the 'mytrips' page.
@@ -45,9 +48,7 @@ class NewTripViewTestCase(TestCase):
             'create_button': True
         }
 
-        # test user login
-        self.client.login(username='testuser', password='testpassword')
-
+        
         response = self.client.post(reverse('travelGroup:newtrip'), data)
 
         self.assertEqual(response.status_code, 302)
@@ -73,10 +74,9 @@ class NewTripViewTestCase(TestCase):
             'create_add_button': True
         }
 
-        # test user login
-        self.client.login(username='testuser', password='testpassword')
-
         response = self.client.post(reverse('travelGroup:newtrip'), data)
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, 'addactivity/' + data['id'])
+
+
