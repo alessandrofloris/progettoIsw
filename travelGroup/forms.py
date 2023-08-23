@@ -53,4 +53,4 @@ ActivityFormSet = modelformset_factory(
     Activity, 
     exclude=('trip',),
     widgets = {'start_date': CustomDateInput(), 'end_date': CustomDateInput()},
-    extra=0)
+    extra=1)
