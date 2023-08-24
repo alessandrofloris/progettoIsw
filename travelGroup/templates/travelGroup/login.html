@@ -1,36 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Trip</title>
+{% extends "travelGroup/base.html" %}
+
+{% block extra-head %}
+
+    <title>TripGroup - Login</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'travelGroup/login.css' %}">
-</head>
-<body>
+{#    <link rel="stylesheet" href="{% static 'travelGroup/login.css' %}">#}
+    <link rel="stylesheet" href="{% static 'travelGroup/tripsTemplate.css' %}">
+    <link rel="stylesheet" href="{% static 'travelGroup/newtripTemplate.css' %}">
 
-<main>
-        <section>
-            <h2></h2>
-        </section>
+{% endblock %}
 
+{% block header %}
+
+    <header class="header">
+        <div class="box-container">
+            <h1>Travel Group - Login</h1>
+        </div>
+    </header>
+
+{#    <header>#}
+{#        <h1>Travel Group - Login</h1>#}
+{#    </header>#}
+
+{% endblock %}
+
+
+{% block main-content %}
+
+    <main>
         <form action="" method="POST">
             {% csrf_token %}
             {{ authenticationForm.as_p }}
-            <input type="submit" value="login">
+            <div class="button-container">
+                <input type="submit" value="login">
+            </div>
         </form>
 
         <p>You are not registered ? <a href="/registration">Register</a></p>
+
+        {% for message in messages %}
+            <p id="">{{message}}</p>
+        {% endfor %}
     </main>
 
-    {% for message in messages %}
-        <p id="">{{message}}}</p>
-    {% endfor %}
+{% endblock %}
 
-    <footer>
-    </footer>
-</body>
+{% block footer %}
 
+{% endblock %}
 
-</body>
-</html>
