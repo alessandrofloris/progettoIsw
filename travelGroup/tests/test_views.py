@@ -83,6 +83,48 @@ class NewTripViewTestCase(TestCase):
         self.assertEqual(str(trip.departure_date), '2023-08-01')
         self.assertEqual(str(trip.arrival_date), '2023-08-10')
         self.assertIn(self.user, trip.participants.all())
+    
+    # Test the creation of a new trip with the incorrect dates using 
+    # the 'create' button in the new trip form.
+    # After form submission, the user should remain in the "new trip" page 
+    # with an error message displayed.
+    def test_create_trip_with_arrival_date_less_than_departure_date(self):
+        data = {
+            'id': '1',
+            'name': 'My Trip',
+            'destination': 'My Destination',
+            'departure_date': '2023-08-10',
+            'arrival_date': '2023-08-05',
+            'create_button': True
+        }
+
+        response = self.client.post(reverse('travelGroup:newtrip'), data)
+
+        self.assertEqual(response.status_code, 200)
+        # check for form validation error message
+        self.assertContains(response, 'Departure date must be before the arrival date.')
+
+    # Test the creation of a new trip with the incorrect dates using 
+    # the 'create and add' button in the new trip form.
+    # After form submission, the user should remain in the "new trip" page 
+    # with an error message displayed.  
+    def test_create_and_add_activity_trip_with_arrival_date_less_than_departure_date(self):
+        data = {
+            'id': '1',
+            'name': 'My Trip',
+            'destination': 'My Destination',
+            'departure_date': '2023-08-10',
+            'arrival_date': '2023-08-05',
+            'create_add_button': True
+        }
+
+        response = self.client.post(reverse('travelGroup:newtrip'), data)
+
+        self.assertEqual(response.status_code, 200)
+        # check for form validation error message
+        self.assertContains(response, 'Departure date must be before the arrival date.')
+
+        
 
 
 # --- Add Activity View Tests ---
@@ -151,4 +193,23 @@ class AddActivityViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'travelGroup/addactivity.html')
         self.assertIsInstance(response.context['addActivityForm'], ActivityForm)
-        self.assertContains(response, 'This field is required.')  # check for form validation error message
+        # check for form validation error message
+        self.assertContains(response, 'This field is required.')
+    
+    # Test the creation of a new activity with the incorrect dates.
+    # After form submission, the user should remain in the "add activity" page 
+    # with an error message displayed.
+    def test_add_activity_with_end_date_less_than_start_date(self):
+        data = {
+            'trip': self.trip,
+            'name': 'Test Activity',
+            'description': 'Test Description',
+            'start_date': '2023-08-10',
+            'end_date': '2023-08-05',
+        }
+
+        response = self.client.post(reverse('travelGroup:addactivity', args=[self.trip.id]), data=data)
+
+        self.assertEqual(response.status_code, 200)
+        # check for form validation error message
+        self.assertContains(response, 'Start date must be before the end date.')

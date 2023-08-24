@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.core.exceptions import ValidationError
 
 
 class InvitationForm(forms.Form):
@@ -44,6 +45,16 @@ class TripForm(ModelForm):
             'arrival_date': forms.DateInput(attrs={'type': 'date'}),
         }
 
+    def clean(self):
+        cleaned_data = super().clean()
+        departure_date = cleaned_data.get('departure_date')
+        arrival_date = cleaned_data.get('arrival_date')
+
+        if departure_date and arrival_date and departure_date >= arrival_date:
+            raise ValidationError("Departure date must be before the arrival date.")
+
+        return cleaned_data
+
 class ActivityForm(ModelForm):
     class Meta:
         model = Activity
@@ -53,3 +64,13 @@ class ActivityForm(ModelForm):
             'start_date': forms.DateInput(attrs={'type': 'date'}),
             'end_date': forms.DateInput(attrs={'type': 'date'}),
         }
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get('start_date')
+        end_date = cleaned_data.get('end_date')
+
+        if start_date and end_date and start_date >= end_date:
+            raise ValidationError("Start date must be before the end date.")
+
+        return cleaned_data
