@@ -9,8 +9,6 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.urls import reverse
 from django.core.exceptions import ValidationError
-from django.utils import timezone
-from datetime import datetime, time
 
 def login_page(request):
     form = AuthenticationForm()
@@ -80,77 +78,59 @@ def addactivity(request, trip_id):
     trip = get_object_or_404(Trip, id=trip_id)
     if request.method == "POST":
         form = ActivityForm(request.POST)
+        form.trip = trip
         if form.is_valid():
             activity = form.save(commit=False)
-            activity.trip = trip
-
-            trip_start_datetime = timezone.make_aware(datetime.combine(trip.departure_date, time.min))
-            trip_end_datetime = timezone.make_aware(datetime.combine(trip.arrival_date, time.max))
-            
-            if activity.start_date < trip_start_datetime or activity.end_date > trip_end_datetime:
-                error_message = "Activity dates must be within the trip's dates range."
-                return render(request, "travelGroup/addactivity.html", {"addActivityForm": form, "error_message": error_message})
-                        
+            activity.trip = trip 
             activity.save()
-
 
             return HttpResponseRedirect(reverse('travelGroup:mytrips'))
     else:
         form = ActivityForm()
     return render(request, "travelGroup/addactivity.html", {"addActivityForm": form})
 
+
 def modify_trip(request, trip_id):
     return HttpResponse("You want to modify the trip %s." % trip_id)
 
-def invite(request):
-    current_user = request.user
 
-    # for testing purposes until the login is ready
+def add_invitation(request):
+    current_user = request.user
     invitations_list = Invitation.objects.filter(recipient=current_user.email, state=False)
 
     if request.method == 'POST':
-        form = InvitationForm(request.user, request.POST)
+        form = InvitationForm(current_user, request.POST)
 
         if form.is_valid():
-            sender_user = request.user
             recipient_email = form.cleaned_data['recipient_email']
             trip = form.cleaned_data['trip']
 
-            try:
-                invitation = Invitation.objects.create(sender=sender_user, recipient=recipient_email, trip=trip)
-                invitation.save()
-            except IntegrityError:
-                return HttpResponse("You already made an identical invitation for this user")
-
-            return HttpResponseRedirect("invite")
-
+            invitation = Invitation.objects.create(sender=current_user, recipient=recipient_email, trip=trip)
+            invitation.save()
+            return redirect('/invite')
     else:
-        form = InvitationForm(request.user)
+        form = InvitationForm(current_user)
 
     return render(request, 'travelGroup/invite.html', {'form': form, 'invitations_list': invitations_list})
 
 
 def process_invitation(request, invitation_id):
 
-    try:
-        invitation = Invitation.objects.get(pk=invitation_id)
+    invitation = Invitation.objects.get(pk=invitation_id)
 
-        if "accept" in request.POST:
-            trip = invitation.trip
-            user = request.user
+    if "accept" in request.POST:
+        trip = invitation.trip
+        user = request.user
 
-            # Aggiungi l'utente come partecipante al viaggio
-            trip.participants.add(user)
+        # Add user as a trip participant
+        trip.participants.add(user)
 
-            # Imposta lo stato su True per accettare l'invito
-            invitation.state = True
-            invitation.save()
+        # set True if the receiver accepts the invitation
+        invitation.state = True
+        invitation.save()
 
-        if "decline" in request.POST:
-            invitation.delete()
-
-    except Invitation.DoesNotExist:
-        pass
+    if "decline" in request.POST:
+        invitation.delete()
 
     return redirect('travelGroup:mytrips')
 

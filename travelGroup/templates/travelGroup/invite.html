@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invita partecipante</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'travelGroup/inviteStyle.css' %}">
+    <link rel="stylesheet" href="{% static 'travelGroup/style.css' %}">
 </head>
 
 <body>
@@ -14,15 +14,15 @@
         <a href="mytrips" class="button-link">I MIEI VIAGGI</a>
     </div>
 
-    {{  request.user.email }}
+    <p>
+       La tua email: {{  request.user.email }}
+    </p>
 
-    <form class="form" action="" method="POST">
+    <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
 
-            <input type="submit" class="button-link button-invite" value="INVITA">
-            <!-- <button type="submit" class="button-link button-invite" value="">INVITA</button> -->
-       <!-- </fieldset> -->
+        <input type="submit" class="button-link button-invite" value="INVITA">
     </form>
 
 

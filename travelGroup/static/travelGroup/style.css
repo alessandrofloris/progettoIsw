@@ -1,0 +1,215 @@
+
+/* from former file: "newTripTemplate.css" */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+form {
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin-top: 20px; 
+}
+
+label, input {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="submit"] {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background: #555;
+}
+
+.hidden{
+    display: none;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* from former file: "tripsTemplate.css" */
+
+/* Header */
+header {
+    height: 8em;
+    width: 100%;
+    background: #05aee6;
+}
+
+.header {
+    height: 8em;
+    width: 100%;
+    background: #05aee6;
+}
+
+.box-container{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 1em;
+}
+
+.header-button-container {
+    flex: 1 1;
+    text-align: center;
+}
+
+.header-button {
+    font-size: 1.3em;
+    background: #ffffff;
+    color: #000000;
+    box-sizing: border-box;
+    padding: 1em 2em;
+    border: 1px solid #000000;
+    text-decoration: none;
+}
+
+/* Main content*/
+
+.trip-list-table {
+    width: 100%;
+    height: auto;
+
+    background: #fff;
+
+    padding: 0.5em;
+
+    box-sizing: border-box;
+}
+
+.trip-table-header {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.single-trip-container {
+    width: 100%;
+    height: 3em;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.single-field-trip-container {
+    width: auto;
+    height: 100%;
+
+    text-align: center;
+
+    border: 1px solid #000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1;
+}
+
+/* from former file: "main.css" */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+a {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+label {
+    font-weight: bold;
+}
+
+header h1 {
+    color: #ffffff;
+    margin: 0;
+}
+
+.footer {
+    height: 8em;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+/* from former file: "inviteStyle.css" */
+option {
+    font-size: 16px;
+    padding: 10px;
+}
+
+input,  select{
+    padding: 10px;
+    margin: 20px 0 20px;
+}
+
+.box-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    background-color: #05aee6;
+    margin: 10px 0 10px;
+}
+
+.button-link {
+    padding: 10px 20px;
+    background-color: white;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.invitations-table{
+    width: 100%;
+}
+
+.invitations-table th, td {
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+}
+
+.invitations-table th {
+    background-color: #05aee6;
+}
+
+.button-accept{
+    background-color: #42b883;
+}
+
+.button-reject{
+    background-color: #fa7f7f;
+}
+
+.button-invite{
+    background-color: #fdb44b;
+}
