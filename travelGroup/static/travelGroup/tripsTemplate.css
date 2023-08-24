@@ -32,6 +32,10 @@ header {
 
 /* Main content*/
 
+.main h2 {
+    text-align: center;
+}
+
 .trip-list-table {
     width: 100%;
     height: auto;
@@ -72,3 +76,4 @@ header {
     justify-content: center;
     flex: 1 1;
 }
+

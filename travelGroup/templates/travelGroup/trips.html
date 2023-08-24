@@ -25,69 +25,72 @@
 {% block main-content %}
 
     {% if tripList %}
-    <div class="trip-list-table">
-        <div class="single-trip-container ">
-            <div class="single-field-trip-container trip-table-header">
-                Trip Name
+    <main class="main">
+        <h2>Your trips</h2>
+        <div class="trip-list-table">
+            <div class="single-trip-container ">
+                <div class="single-field-trip-container trip-table-header">
+                    Trip Name
+                </div>
+                <div class="single-field-trip-container trip-table-header">
+                    Trip Destination
+                </div>
+                <div class="single-field-trip-container trip-table-header">
+                    Departure Date
+                </div>
+                <div class="single-field-trip-container trip-table-header">
+                    Arrival Date
+                </div>
+                <div class="single-field-trip-container trip-table-header">
+                    Participants
+                </div>
+                <div class="single-field-trip-container trip-table-header">
+                    Itinerary
+                </div>
+                <div class="single-field-trip-container trip-table-header">
+                    View Trip
+                </div>
+                <div class="single-field-trip-container trip-table-header">
+                    Modify Trip
+                </div>
             </div>
-            <div class="single-field-trip-container trip-table-header">
-                Trip Destination
-            </div>
-            <div class="single-field-trip-container trip-table-header">
-                Departure Date
-            </div>
-            <div class="single-field-trip-container trip-table-header">
-                Arrival Date
-            </div>
-            <div class="single-field-trip-container trip-table-header">
-                Participants
-            </div>
-            <div class="single-field-trip-container trip-table-header">
-                Itinerary
-            </div>
-            <div class="single-field-trip-container trip-table-header">
-                View Trip
-            </div>
-            <div class="single-field-trip-container trip-table-header">
-                Modify Trip
-            </div>
-        </div>
-    {% for trip in tripList %}
-        <div class="single-trip-container">
-            <div class="single-field-trip-container">
-                {{ trip.name }}
-            </div>
-            <div class="single-field-trip-container">
-                {{ trip.destination }}
-            </div>
-            <div class="single-field-trip-container">
-                {{ trip.departure_date }}
-            </div>
-            <div class="single-field-trip-container">
-                {{ trip.arrival_date }}
-            </div>
-            <div class="single-field-trip-container">
+        {% for trip in tripList %}
+            <div class="single-trip-container">
+                <div class="single-field-trip-container">
+                    {{ trip.name }}
+                </div>
+                <div class="single-field-trip-container">
+                    {{ trip.destination }}
+                </div>
+                <div class="single-field-trip-container">
+                    {{ trip.departure_date }}
+                </div>
+                <div class="single-field-trip-container">
+                    {{ trip.arrival_date }}
+                </div>
+                <div class="single-field-trip-container">
 
-                {% for participant in trip.participants.all %}
-                    <span>{{ participant.username }};</span>
-                {% endfor %}
+                    {% for participant in trip.participants.all %}
+                        <span>{{ participant.username }};</span>
+                    {% endfor %}
 
+                </div>
+                <div class="single-field-trip-container">
+                    {{ trip.activity_set.count }} activities
+                </div>
+                <div class="single-field-trip-container">
+                    <a href={% url 'travelGroup:viewtrip' trip_id=trip.id %}>View</a>
+                </div>
+                <div class="single-field-trip-container">
+                    <a href={% url 'travelGroup:modifytrip' trip_id=trip.id %}>Modify</a>
+                </div>
             </div>
-            <div class="single-field-trip-container">
-                {{ trip.activity_set.count }} activities
-            </div>
-            <div class="single-field-trip-container">
-                <a href={% url 'travelGroup:viewtrip' trip_id=trip.id %}>View</a>
-            </div>
-            <div class="single-field-trip-container">
-                <a href={% url 'travelGroup:modifytrip' trip_id=trip.id %}>Modify</a>
-            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-    {% else %}
-        <p>No trips to show!</p>
-    {% endif %}
+        {% else %}
+            <h2>No trips to show!</h2>
+        {% endif %}
+</main>
 
 {% endblock %}
 
