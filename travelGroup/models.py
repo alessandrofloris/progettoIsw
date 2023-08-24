@@ -33,9 +33,13 @@ class Activity(models.Model):
     
     def __str__(self):
         return self.name
-    
+
     def check_dates(self):
         return self.end_date >= self.start_date
+
+    def check_dates_is_inside_trip_date_range(self):
+        return ((self.trip.departure_date <= self.start_date.date() <= self.trip.arrival_date) and
+                (self.trip.arrival_date >= self.end_date.date() >= self.trip.departure_date))
 
 
 class Invitation(models.Model):

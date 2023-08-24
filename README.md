@@ -14,6 +14,9 @@ o alla pagina di registrazione, viene in automatico rindirizzato alla home
 come newtrip o mytrips ecc deve essere in automatico rindirizzato alla pagina di
 login
 
+## Varie
+- Per i test unitari usiamo django.test.TestCase e non unittest per [questo](https://stackoverflow.com/questions/10064846/difference-between-django-test-testcase-vs-unittest-vs-django-utils-unittest-tes) motivo: 
+
 ## Utenti Admin
 - Alessandro Floris
   - username: alessandrofloris
