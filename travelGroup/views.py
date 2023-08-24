@@ -9,8 +9,6 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.urls import reverse
 from django.core.exceptions import ValidationError
-from django.utils import timezone
-from datetime import datetime, time
 
 def login_page(request):
     form = AuthenticationForm()
@@ -80,19 +78,11 @@ def addactivity(request, trip_id):
     trip = get_object_or_404(Trip, id=trip_id)
     if request.method == "POST":
         form = ActivityForm(request.POST)
+        form.trip = trip
         if form.is_valid():
             activity = form.save(commit=False)
-            activity.trip = trip
-
-            trip_start_datetime = timezone.make_aware(datetime.combine(trip.departure_date, time.min))
-            trip_end_datetime = timezone.make_aware(datetime.combine(trip.arrival_date, time.max))
-            
-            if activity.start_date < trip_start_datetime or activity.end_date > trip_end_datetime:
-                error_message = "Activity dates must be within the trip's dates range."
-                return render(request, "travelGroup/addactivity.html", {"addActivityForm": form, "error_message": error_message})
-                        
+            activity.trip = trip 
             activity.save()
-
 
             return HttpResponseRedirect(reverse('travelGroup:mytrips'))
     else:
