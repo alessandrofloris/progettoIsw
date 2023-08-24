@@ -67,10 +67,10 @@ class ActivityForm(ModelForm):
     
     def clean(self):
         cleaned_data = super().clean()
-        departure_date = cleaned_data.get('start_date')
-        arrival_date = cleaned_data.get('end_date')
+        start_date = cleaned_data.get('start_date')
+        end_date = cleaned_data.get('end_date')
 
-        if departure_date and arrival_date and departure_date >= arrival_date:
+        if start_date and end_date and start_date >= end_date:
             raise ValidationError("Start date must be before the end date.")
 
         return cleaned_data
