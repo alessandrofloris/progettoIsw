@@ -5,6 +5,8 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ValidationError
+from django.utils import timezone
+from datetime import datetime, time
 
 
 class InvitationForm(forms.Form):
@@ -70,7 +72,15 @@ class ActivityForm(ModelForm):
         start_date = cleaned_data.get('start_date')
         end_date = cleaned_data.get('end_date')
 
-        if start_date and end_date and start_date >= end_date:
-            raise ValidationError("Start date must be before the end date.")
+        if start_date and end_date:
+            trip = self.trip
+            trip_start_date = timezone.make_aware(datetime.combine(trip.departure_date, time.min))
+            trip_end_date = timezone.make_aware(datetime.combine(trip.arrival_date, time.max))
+
+            if start_date < trip_start_date or end_date > trip_end_date:
+                raise ValidationError("Activity dates must be within the trip dates range.")
+
+            if start_date and end_date and start_date >= end_date:
+                raise ValidationError("Start date must be before the end date.")
 
         return cleaned_data

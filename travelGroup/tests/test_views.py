@@ -129,7 +129,7 @@ class NewTripViewTestCase(TestCase):
 
 # --- Add Activity View Tests ---
 class AddActivityViewTestCase(TestCase):
-
+    
     # Set up the testing environment before each test method. 
     # Initializes a client for simulating HTTP requests.
     def setUp(self):
@@ -213,3 +213,56 @@ class AddActivityViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         # check for form validation error message
         self.assertContains(response, 'Start date must be before the end date.')
+
+    # Test the creation of a new activity whit its dates within the trip dates.
+    # After form submission, it checks whether the response status code is 302 (redirect), and 
+    # verifies that the redirection is correct using the assertRedirects method.
+    def test_activity_dates_range_within_trip_dates(self):
+        data = {
+            'trip': self.trip,
+            'name': 'Test Activity',
+            'description': 'Test Description',
+            'start_date': '2023-08-02',
+            'end_date': '2023-08-05',
+        }
+
+        response = self.client.post(reverse('travelGroup:addactivity', args=[self.trip.id]), data=data)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('travelGroup:mytrips'))
+
+    # Test the creation of a new activity with the start date outside the trip dates range.
+    # After form submission, it checks whether the response status code is 302 (redirect), and 
+    # verifies that the redirection is correct using the assertRedirects method.
+    def test_activity_start_date_outside_range_trip_dates(self):
+        data = {
+            'trip': self.trip,
+            'name': 'Test Activity',
+            'description': 'Test Description',
+            'start_date': '2023-07-02', # less than trip's departure date
+            'end_date': '2023-08-09',
+        }
+
+        response = self.client.post(reverse('travelGroup:addactivity', args=[self.trip.id]), data=data)
+
+        self.assertEqual(response.status_code, 200)
+        # check for form validation error message
+        self.assertContains(response, "Activity dates must be within the trip dates range.")
+
+    # Test the creation of a new activity with the end date outside the trip dates range.
+    # After form submission, it checks whether the response status code is 302 (redirect), and 
+    # verifies that the redirection is correct using the assertRedirects method.
+    def test_activity_end_date_outside_range_trip_dates(self):
+        data = {
+            'trip': self.trip,
+            'name': 'Test Activity',
+            'description': 'Test Description',
+            'start_date': '2023-08-02',
+            'end_date': '2023-08-11', # greater than trip's arrival date
+        }
+
+        response = self.client.post(reverse('travelGroup:addactivity', args=[self.trip.id]), data=data)
+
+        self.assertEqual(response.status_code, 200)
+        # check for form validation error message
+        self.assertContains(response, "Activity dates must be within the trip dates range.")

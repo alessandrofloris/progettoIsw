@@ -1,9 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
 a {
-    color: blue;
     font-weight: bold;
     text-decoration: none;
 }
 
 label {
     font-weight: bold;
+}
+
+.header {
+    height: 8em;
+    width: 100%;
+    background: #475053;
+}
+
+header h1 {
+    color: #ffffff;
+    margin: 0;
+}
+
+.footer {
+    height: 8em;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
 }

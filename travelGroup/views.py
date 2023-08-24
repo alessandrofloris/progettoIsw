@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.urls import reverse
-
+from django.core.exceptions import ValidationError
 
 def login_page(request):
     form = AuthenticationForm()
@@ -78,11 +78,11 @@ def addactivity(request, trip_id):
     trip = get_object_or_404(Trip, id=trip_id)
     if request.method == "POST":
         form = ActivityForm(request.POST)
+        form.trip = trip
         if form.is_valid():
             activity = form.save(commit=False)
-            activity.trip = trip
+            activity.trip = trip 
             activity.save()
-
 
             return HttpResponseRedirect(reverse('travelGroup:mytrips'))
     else:
