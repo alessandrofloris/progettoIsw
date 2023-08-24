@@ -64,3 +64,13 @@ class ActivityForm(ModelForm):
             'start_date': forms.DateInput(attrs={'type': 'date'}),
             'end_date': forms.DateInput(attrs={'type': 'date'}),
         }
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        departure_date = cleaned_data.get('start_date')
+        arrival_date = cleaned_data.get('end_date')
+
+        if departure_date and arrival_date and departure_date >= arrival_date:
+            raise ValidationError("Start date must be before the end date.")
+
+        return cleaned_data
