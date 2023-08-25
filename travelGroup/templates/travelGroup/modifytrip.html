@@ -1,0 +1,45 @@
+{% extends "travelGroup/base.html" %}
+
+{% block extra-head %}
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'travelGroup/style.css' %}">
+
+{% endblock %}
+
+{% block header %}
+
+    <header>
+        <div class="box-container">
+            <div class="header-button-container">
+                <a href="/mytrips" type="button" class="header-button">MY TRIPS</a>
+            </div>
+            <div class="header-button-container">
+                <a href="/logout" class="header-button ">LOGOUT</a>
+            </div>
+        </div>
+    </header>
+
+{% endblock %}
+
+{% block main-content %}
+
+    <main>
+        <section>
+            <h1>Modify your trip!</h1>
+            <h2>Trip Details</h2>
+        </section>
+
+        {# new trip form #}
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ newTripForm }}
+
+            <div class="button-container">
+                <input type="submit" name="create_button" value="Modify">
+                <input type="submit" name="create_add_button" value="Modify and Add Activities">
+            </div>
+        </form>
+    </main>
+
+{% endblock %}
