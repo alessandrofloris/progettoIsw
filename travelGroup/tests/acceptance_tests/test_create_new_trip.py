@@ -3,10 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from travelGroup.models import CustomUser
-from selenium.webdriver.support.ui import WebDriverWait
 
-
-class NewTripCreationAcceptanceTest(LiveServerTestCase):
+class NewTripViewAcceptanceTest(LiveServerTestCase):
 
     def setUp(self):
         self.user = CustomUser.objects.create_user(username='testuser', first_name='test', last_name='user', email='testemail@email.com', password='testpassword')
