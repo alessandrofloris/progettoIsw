@@ -2,10 +2,24 @@ from django.test import LiveServerTestCase
 from selenium import webdriver
 from django.conf import settings
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
-class NewTripCreationAcceptanceTest(LiveServerTestCase):
+class test_NewTripCreationAcceptanceTest(LiveServerTestCase):
     def setUp(self):
-        self.browser = webdriver.Firefox(executable_path=settings.SELENIUM_DRIVER_PATH)
+        # path to geckodriver executable file
+        geckodriver_executable_path = "/snap/bin/geckodriver"
+
+        # configure webdriver
+        options = Options()
+        # options.add_argument('-headless') # NON viene mostrata la GUI
+        options.add_argument("--window-size=1920,1080")  # settaggio dimensioni finestra
+        options.add_argument("start-maximized")  # finestra a tutto schermo
+        options.set_preference('permissions.default.image', 2) # il valore 2 fa si che NON vengano caricate le immagini
+        options.binary = FirefoxBinary(geckodriver_executable_path)
+        
+
+        self.browser = webdriver.Firefox(options=options)
 
     def tearDown(self):
         self.browser.quit()
