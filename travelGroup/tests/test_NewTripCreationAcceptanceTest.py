@@ -5,52 +5,33 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
-class test_NewTripCreationAcceptanceTest(LiveServerTestCase):
-    def setUp(self):
-        # path to geckodriver executable file
-        geckodriver_executable_path = "/snap/bin/geckodriver"
+def test_new_trip_creation(self):
+    # user navigates to the new trip creation page
+    self.browser.get(self.live_server_url + '/newtrip')
 
-        # configure webdriver
-        options = Options()
-        # options.add_argument('-headless') # NON viene mostrata la GUI
-        options.add_argument("--window-size=1920,1080")  # settaggio dimensioni finestra
-        options.add_argument("start-maximized")  # finestra a tutto schermo
-        options.set_preference('permissions.default.image', 2) # il valore 2 fa si che NON vengano caricate le immagini
-        options.binary = FirefoxBinary(geckodriver_executable_path)
-        
+    # user fills in the form fields
+    name_input = self.browser.find_element_by_id('id_name')  # Replace with actual form field ID
+    name_input.send_keys('My Trip')
 
-        self.browser = webdriver.Firefox(options=options)
+    destination_input = self.browser.find_element_by_id('id_destination')
+    destination_input.send_keys('My Destination')
 
-    def tearDown(self):
-        self.browser.quit()
+    departure_date_input = self.browser.find_element_by_id('id_departure_date')
+    departure_date_input.send_keys('2023-08-01')
 
-    def test_new_trip_creation(self):
-        # user navigates to the new trip creation page
-        self.browser.get(self.live_server_url + '/newtrip')
+    arrival_date_input = self.browser.find_element_by_id('id_arrival_date')
+    arrival_date_input.send_keys('2023-08-10')
 
-        # user fills in the form fields
-        name_input = self.browser.find_element_by_id('id_name')  # Replace with actual form field ID
-        name_input.send_keys('My Trip')
+    # user submits the form
+    create_button = self.browser.find_element_by_name('create_button')
+    create_button.send_keys(Keys.RETURN)
 
-        destination_input = self.browser.find_element_by_id('id_destination')
-        destination_input.send_keys('My Destination')
+    # user is redirected to the mytrips page (assert the redirect)
+    self.assertIn('mytrips', self.browser.current_url)
 
-        departure_date_input = self.browser.find_element_by_id('id_departure_date')
-        departure_date_input.send_keys('2023-08-01')
-
-        arrival_date_input = self.browser.find_element_by_id('id_arrival_date')
-        arrival_date_input.send_keys('2023-08-10')
-
-        # user submits the form
-        create_button = self.browser.find_element_by_name('create_button')
-        create_button.send_keys(Keys.RETURN)
-
-        # user is redirected to the mytrips page (assert the redirect)
-        self.assertIn('mytrips', self.browser.current_url)
-
-        # Checking that the trip was created and displayed on the mytrips page
-        self.assertIn('My Trip', self.browser.page_source)
-        self.assertIn('My Destination', self.browser.page_source)
-        self.assertIn('2023-08-01', self.browser.page_source)
-        self.assertIn('2023-08-10', self.browser.page_source)
+    # Checking that the trip was created and displayed on the mytrips page
+    self.assertIn('My Trip', self.browser.page_source)
+    self.assertIn('My Destination', self.browser.page_source)
+    self.assertIn('2023-08-01', self.browser.page_source)
+    self.assertIn('2023-08-10', self.browser.page_source)
 
