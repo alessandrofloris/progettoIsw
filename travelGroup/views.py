@@ -91,7 +91,20 @@ def addactivity(request, trip_id):
 
 
 def modify_trip(request, trip_id):
-    return HttpResponse("You want to modify the trip %s." % trip_id)
+    trip = get_object_or_404(Trip, id=trip_id)
+    if request.method == "POST":
+        form = TripForm(request.POST, instance=trip)
+        if form.is_valid():
+            if "create_button" in request.POST:
+                form.save()
+                return HttpResponseRedirect(reverse('travelGroup:mytrips'))
+            elif "create_add_button" in request.POST:
+                form.save()
+                url = "addactivity/" + str(trip.id)
+                return HttpResponseRedirect(url)
+    else:
+        form = TripForm()
+    return render(request, "travelGroup/modifytrip.html", {"newTripForm": form})
 
 
 def add_invitation(request):

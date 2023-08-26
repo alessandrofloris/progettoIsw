@@ -8,4 +8,4 @@
 Pipfile
 Pipfile.lock
 /.idea/proj.iml
-./chrome-linux64
+*.log
