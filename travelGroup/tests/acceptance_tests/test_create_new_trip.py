@@ -29,7 +29,7 @@ class NewTripViewAcceptanceTest(LiveServerTestCase):
         self.driver.execute_script("arguments[0].value = arguments[1]", trip_arrival_date, date_value)
 
         # TODO: add partecipant to trip
-
+    
         trip_create_button = self.driver.find_element(By.NAME, "create_button")
         trip_create_button.click()
 
