@@ -12,7 +12,7 @@
     <header>
         <div class="box-container">
             <div class="header-button-container">
-                <a href="mytrips" type="button" class="header-button">MY TRIPS</a>
+                <a href="/mytrips" type="button" class="header-button">MY TRIPS</a>
             </div>
             <div class="header-button-container">
                 <a href="/logout" class="header-button ">LOGOUT</a>
@@ -26,8 +26,8 @@
 
     <main>
         <section>
-            <h1>Create a new trip to share with your friends!</h1>
-            <h2>New Trip Details</h2>
+            <h1>Modify your trip!</h1>
+            <h2>Trip Details</h2>
         </section>
 
         {# new trip form #}
@@ -36,19 +36,10 @@
             {{ newTripForm }}
 
             <div class="button-container">
-                <input type="submit" name="create_button" value="Create">
-                <input type="submit" name="create_add_button" value="Create and Add Activities">
+                <input type="submit" name="create_button" value="Modify">
+                <input type="submit" name="create_add_button" value="Modify and Add Activities">
             </div>
         </form>
     </main>
 
 {% endblock %}
-
-{% block footer %}
-
-{#    <footer class="footer">#}
-{#        <p>&copy; 2023 NoNameCompany. All rights reserved.</p>#}
-{#    </footer>#}
-
-{% endblock %}
-

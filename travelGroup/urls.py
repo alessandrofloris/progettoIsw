@@ -11,7 +11,7 @@ urlpatterns = [
     path("", views.login_page, name='login'),
     path("registration", views.registration, name='signup'),
     path("logout", views.logout_page, name='logout'),
-    path("invite", views.invite),
+    path("invite", views.add_invitation),
     path("viewtrip/<int:trip_id>", views.view_trip, name='viewtrip'),
     path('process_invitation/<int:invitation_id>/', views.process_invitation, name='process_invitation'),
     path('add_comment/<int:trip_id>/', views.add_comment, name='add_comment'),
