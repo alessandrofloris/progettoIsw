@@ -95,15 +95,14 @@ def modify_trip(request, trip_id):
     if request.method == "POST":
         form = TripForm(request.POST, instance=trip)
         if form.is_valid():
+            form.save()
             if "create_button" in request.POST:
-                form.save()
                 return HttpResponseRedirect(reverse('travelGroup:mytrips'))
             elif "create_add_button" in request.POST:
-                form.save()
                 url = "addactivity/" + str(trip.id)
                 return HttpResponseRedirect(url)
     else:
-        form = TripForm()
+        form = TripForm(instance=trip)
     return render(request, "travelGroup/modifytrip.html", {"newTripForm": form})
 
 
