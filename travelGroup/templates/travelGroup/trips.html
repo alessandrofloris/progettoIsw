@@ -26,7 +26,7 @@
 
     {% if tripList %}
     <main class="main">
-        <h2>Your trips</h2>
+        <h2 id="trips-title" >Your trips</h2>
         <div class="trip-list-table">
             <div class="single-trip-container ">
                 <div class="single-field-trip-container trip-table-header">
@@ -88,7 +88,9 @@
             {% endfor %}
         </div>
         {% else %}
-            <h2>No trips to show!</h2>
+            <div >
+                <h2 id="no-trips-title">No trips to show!</h2>
+            </div>
         {% endif %}
 </main>
 
