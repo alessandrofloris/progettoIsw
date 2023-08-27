@@ -28,7 +28,7 @@ class AddActivityViewAcceptanceTest(StaticLiveServerTestCase):
         newtrip_button.click()
 
     # button clicked: "create_add_button"
-    def create_trip_and_add_activity(self):
+    def create_trip(self):
 
         trip_name = self.driver.find_element(By.NAME, "name")
         trip_name.send_keys("Test Trip")
@@ -44,14 +44,17 @@ class AddActivityViewAcceptanceTest(StaticLiveServerTestCase):
         date_value = "2023-08-16"
         self.driver.execute_script("arguments[0].value = arguments[1]", trip_arrival_date, date_value)
 
-        trip_create_button = self.driver.find_element(By.NAME, "create_add_button")
+        trip_create_button = self.driver.find_element(By.NAME, "create_button")
         trip_create_button.click()
 
     def test_add_activity(self):
 
         self.login()
         self.home()
-        self.create_trip_and_add_activity()
+        self.create_trip()
+
+        addactivity_link = self.driver.find_element(By.NAME, "addactivity")
+        addactivity_link.click()
 
         activity_name = self.driver.find_element(By.NAME, "name")
         activity_name.send_keys("Test Activity")
