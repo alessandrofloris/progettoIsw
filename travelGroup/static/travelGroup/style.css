@@ -95,9 +95,7 @@ header {
     box-sizing: border-box;
     margin-left: 1em;
     margin-right: 1em;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+
 }
 
 .field_container {
