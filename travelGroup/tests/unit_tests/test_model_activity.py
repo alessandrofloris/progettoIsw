@@ -4,7 +4,7 @@ from travelGroup.models import Trip, CustomUser, Activity
 import pytz
 
 
-class TripTestCase(TestCase):
+class ActivityTestCase(TestCase):
 
     def setUp(self):
         self.user = CustomUser(username='testuser', first_name='test', last_name='user', email='testemail@email.com', password='testpassword')
