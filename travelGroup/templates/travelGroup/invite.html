@@ -1,18 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "travelGroup/base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invita partecipante</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'travelGroup/style.css' %}">
-</head>
+{% block title %}Invita partecipante{% endblock %}
 
-<body>
-    <div class="box-buttons">
-        <a href="mytrips" class="button-link">I MIEI VIAGGI</a>
-    </div>
+
+{% block header %}
+
+    <header>
+        <div class="box-container">
+            <div class="header-button-container">
+                <a href="mytrips" type="button" class="header-button">MY TRIPS</a>
+            </div>
+            <div class="header-button-container">
+                <a href="/logout" name="logout_button" class="header-button ">LOGOUT</a>
+            </div>
+        </div>
+    </header>
+
+{% endblock %}
+
+{% block main-content %}
 
     <p>
        La tua email: {{  request.user.email }}
@@ -22,7 +28,7 @@
         {% csrf_token %}
         {{ form.as_p }}
 
-        <input type="submit" class="button-link button-invite" value="INVITA">
+        <input type="submit" name="new_invite" class="button-link button-invite" value="INVITA">
     </form>
 
 
@@ -58,9 +64,8 @@
     {% endif %}
     </table>
 
-    <footer>
-    </footer>
+{% endblock %}
 
-</body>
+{% block footer %}
 
-</html>
+{% endblock %}

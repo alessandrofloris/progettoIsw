@@ -170,5 +170,8 @@ def add_comment(request, trip_id):
             new_comment = Comment.objects.create(content=content, user=current_user, trip=trip)
             new_comment.save()
 
-    # Utilizza la funzione `redirect` per tornare alla pagina precedente
-    return redirect(request.META.get('HTTP_REFERER', 'mytrips'))
+    # trip_url = reverse('view_trip', args=[trip_id])
+
+    trip_url = f'/viewtrip/{trip_id}'
+    # return HttpResponseRedirect(trip_url)
+    return redirect(trip_url)
