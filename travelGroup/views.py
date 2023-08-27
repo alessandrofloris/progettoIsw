@@ -118,7 +118,6 @@ def add_invitation(request):
 
     return render(request, 'travelGroup/invite.html', {'form': form, 'invitations_list': invitations_list})
 
-
 def process_invitation(request, invitation_id):
 
     invitation = Invitation.objects.get(pk=invitation_id)
@@ -139,7 +138,7 @@ def process_invitation(request, invitation_id):
 
     return redirect('travelGroup:mytrips')
 
-
+@login_required()
 def view_trip(request, trip_id):
 
     comment_form = CommentForm()

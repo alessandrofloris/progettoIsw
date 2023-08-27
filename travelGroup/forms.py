@@ -10,12 +10,12 @@ from datetime import datetime, time
 
 
 class InvitationForm(forms.Form):
-    ERROR_EMAIL_NOT_FOUND = "Invito non recapitato. Verifica l'email inserita"
-    ERROR_INVITATION_EXISTS = "L'utente ha già ricevuto un invito per il gruppo"
-    ERROR_ALREADY_PARTICIPATING = "L'utente fa già parte del gruppo"
+    ERROR_EMAIL_NOT_FOUND = "Invitation not sent. Verify the inserted email"
+    ERROR_INVITATION_EXISTS = "The user has already received an invitation for this trip"
+    ERROR_ALREADY_PARTICIPATING = "The user is already in the trip group"
 
-    recipient_email = forms.EmailField(label='Email destinatario', required=True)
-    trip = forms.ModelChoiceField(queryset=None, label='Nome viaggio')
+    recipient_email = forms.EmailField(label='Recipient email', required=True)
+    trip = forms.ModelChoiceField(queryset=None, label='Trip name')
 
     def __init__(self, sender_user, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -84,7 +84,7 @@ class TripForm(ModelForm):
         departure_date = cleaned_data.get('departure_date')
         arrival_date = cleaned_data.get('arrival_date')
 
-        if departure_date and arrival_date and departure_date >= arrival_date:
+        if departure_date > arrival_date:
             raise ValidationError("Departure date must be before the arrival date.")
 
         return cleaned_data
@@ -112,7 +112,7 @@ class ActivityForm(ModelForm):
             if start_date < trip_start_date or end_date > trip_end_date:
                 raise ValidationError("Activity dates must be within the trip dates range.")
 
-            if start_date and end_date and start_date >= end_date:
+            if start_date >= end_date:
                 raise ValidationError("Start date must be before the end date.")
 
         return cleaned_data

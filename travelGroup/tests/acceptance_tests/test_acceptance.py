@@ -2,7 +2,7 @@ import time
 import unittest
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.edge.webdriver import WebDriver
 
 from selenium.webdriver.common.by import By
 from travelGroup.models import CustomUser, Trip, Invitation
@@ -77,9 +77,9 @@ class AcceptanceTests(StaticLiveServerTestCase):
             "user": self.user2,
             "trip": self.trip2,
         }
+        self.driver = WebDriver()
 
     def test_logout(self):
-        self.driver = WebDriver()
         self.driver.get(self.live_server_url)
 
         AuthenticationTest.login(self.driver, self.user1_data)
@@ -91,7 +91,6 @@ class AcceptanceTests(StaticLiveServerTestCase):
         self.driver.find_element(By.NAME, "viewtrip").click()
 
     def test_show_trip_details(self):
-        self.driver = WebDriver()
         self.driver.get(self.live_server_url)
         AuthenticationTest.login(self.driver, self.user1_data)
         self.from_mytrips_to_trip_detail(self.trip1.id)
@@ -100,7 +99,6 @@ class AcceptanceTests(StaticLiveServerTestCase):
         self.assertEqual(trip_name, expected_content)
 
     def test_there_are_no_trips(self):
-        self.driver = WebDriver()
         self.driver.get(self.live_server_url)
         AuthenticationTest.login(self.driver, self.user2_data)
         expected_content = "No trips to show!"
@@ -109,7 +107,6 @@ class AcceptanceTests(StaticLiveServerTestCase):
         self.assertEqual(content.text, expected_content)
 
     def test_there_are_trips(self):
-        self.driver = WebDriver()
         self.driver.get(self.live_server_url)
         AuthenticationTest.login(self.driver, self.user1_data)
         TripTest.create_trip(self, self.trip1_data)
@@ -119,7 +116,6 @@ class AcceptanceTests(StaticLiveServerTestCase):
         self.assertEqual(content.text, expected_content)
 
     def test_there_are_n_trips(self):
-        self.driver = WebDriver()
         self.driver.get(self.live_server_url)
         AuthenticationTest.login(self.driver, self.user2_data)
         TripTest.create_trip(self, self.trip1_data)
@@ -130,7 +126,6 @@ class AcceptanceTests(StaticLiveServerTestCase):
         self.assertEqual(number_of_trips, expected_result)
 
     def test_login(self):
-        self.driver = WebDriver()
         self.driver.get(self.live_server_url)
 
         # Username wrong
@@ -151,7 +146,6 @@ class AcceptanceTests(StaticLiveServerTestCase):
         self.driver.quit()
 
     def test_new_trip(self):
-        self.driver = WebDriver()
         self.driver.get(self.live_server_url)
 
         AuthenticationTest.login(self.driver, self.user1_data)
@@ -170,7 +164,6 @@ class AcceptanceTests(StaticLiveServerTestCase):
         self.driver.quit()
 
     def test_new_activity(self):
-        self.driver = WebDriver()
         self.driver.get(self.live_server_url)
 
         AuthenticationTest.login(self.driver, self.user1_data)
@@ -192,7 +185,6 @@ class AcceptanceTests(StaticLiveServerTestCase):
         self.driver.quit()
 
     def test_modify_trip(self):
-        self.driver = WebDriver()
         self.driver.get(self.live_server_url)
 
         AuthenticationTest.login(self.driver, self.user1_data)
@@ -210,7 +202,6 @@ class AcceptanceTests(StaticLiveServerTestCase):
         self.driver.quit()
 
     def test_new_invitation(self):
-        self.driver = WebDriver()
         self.driver.get(self.live_server_url)
 
         AuthenticationTest.login(self.driver, self.user1_data)
@@ -232,7 +223,6 @@ class AcceptanceTests(StaticLiveServerTestCase):
         self.driver.quit()
 
     def test_view_trip(self):
-        self.driver = WebDriver()
         self.driver.get(self.live_server_url)
 
         AuthenticationTest.login(self.driver, self.user1_data)
@@ -244,7 +234,6 @@ class AcceptanceTests(StaticLiveServerTestCase):
 
         new_invitation = Invitation.objects.create(**self.test_invitation)
 
-        self.driver = WebDriver()
         self.driver.get(self.live_server_url)
         AuthenticationTest.login(self.driver, self.user2_data)
 
@@ -255,7 +244,6 @@ class AcceptanceTests(StaticLiveServerTestCase):
 
         new_invitation = Invitation.objects.create(**self.test_invitation)
 
-        self.driver = WebDriver()
         self.driver.get(self.live_server_url)
         AuthenticationTest.login(self.driver, self.user2_data)
 
@@ -266,7 +254,6 @@ class AcceptanceTests(StaticLiveServerTestCase):
         self.driver.quit()
 
     def test_add_comment(self):
-        self.driver = WebDriver()
         self.driver.get(self.live_server_url)
         AuthenticationTest.login(self.driver, self.user1_data)
 
