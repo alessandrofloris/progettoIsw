@@ -49,7 +49,6 @@ class Invitation(models.Model):
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name="Trip's Invitation")
     state = models.BooleanField(default=False, verbose_name="State")
 
-    # TODO: to check
     def __str__(self):
         return "Invitation for " + str(self.recipient) + " to " + str(self.trip)
 
@@ -60,10 +59,5 @@ class Comment(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name="User")
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE, verbose_name="Trip")
 
-    # TODO: to check
     def __str__(self):
-        # todo: commenti da eliminare
-        # il metodo __str__ in un model serve per dare una breve descrizione del record,
-        # non si dovrebbe esplicitare ogni campo
-        # vedere questo link https://stackoverflow.com/questions/45483417/what-is-doing-str-function-in-django
         return "Comment id" + str(self.id)
