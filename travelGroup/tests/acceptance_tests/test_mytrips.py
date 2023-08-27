@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from travelGroup.models import CustomUser
 
 
-class NewTripViewAcceptanceTest(StaticLiveServerTestCase):
+class ViewTripsAcceptanceTest(StaticLiveServerTestCase):
 
     def setUp(self):
         self.user = CustomUser.objects.create_superuser(username='testuser', first_name='test', last_name='user',
