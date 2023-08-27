@@ -92,18 +92,18 @@ class AcceptanceTests(StaticLiveServerTestCase):
 
         # Username wrong
         self.user1_data["username"] = "user_wrong"
-        AuthenticationTest.login(self.driver, self.user2_data)
+        AuthenticationTest.login(self.driver, self.user1_data)
         time.sleep(2)
 
         # Password wrong
         self.user1_data["username"] = "user1"
         self.user1_data["password"] = "psw_wrong"
-        AuthenticationTest.login(self.driver, self.user2_data)
+        AuthenticationTest.login(self.driver, self.user1_data)
         time.sleep(2)
 
         # Data set correctly
         self.user1_data["password"] = "password1"
-        AuthenticationTest.login(self.driver, self.user2_data)
+        AuthenticationTest.login(self.driver, self.user1_data)
 
         self.driver.quit()
     
