@@ -90,6 +90,32 @@ header {
 
 /* Main content*/
 
+.trip-details-container {
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 1em;
+    margin-right: 1em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.field_container {
+    box-sizing: border-box;
+    flex: 1 0;
+}
+
+.activity-container {
+    width: auto;
+    box-sizing: border-box;
+    border-bottom: 1px solid black;
+}
+
+
+.field_container form {
+    width: auto;
+}
+
 .trip-list-table {
     width: 100%;
     height: auto;

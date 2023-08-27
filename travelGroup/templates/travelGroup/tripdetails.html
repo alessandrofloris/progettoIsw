@@ -60,21 +60,24 @@
             <h3 class="field-label">Activities:</h3>
             {% if activities.count > 0 %}
                 {% for activity in activities %}
-                    <label class="activity-label">Name</label>
-                    <p class="field-content">{{  activity.name }}</p>
-                    <label class="activity-label">Description</label>
-                    <p class="field-content">{{  activity.description }}</p>
-                    <label class="activity-label">Start date</label>
-                    <p class="field-content">{{  activity.start_date }}</p>
-                    <label class="activity-label">End date</label>
-                    <p class="field-content">{{  activity.end_date }}</p>
+                    <div class="activity-container">
+                        <label class="activity-label">Name</label>
+                        <p class="field-content">{{  activity.name }}</p>
+                        <label class="activity-label">Description</label>
+                        <p class="field-content">{{  activity.description }}</p>
+                        <label class="activity-label">Start date</label>
+                        <p class="field-content">{{  activity.start_date }}</p>
+                        <label class="activity-label">End date</label>
+                        <p class="field-content">{{  activity.end_date }}</p>
+                    </div>
                 {% endfor %}
             {% else %}
                 <p class="field-content">This trip has no activities</p>
             {% endif %}
         </div>
+    </div>
 
-
+    <div class="trip-details-container">
         <div class="field_container">
             <h3 class="field-label">Commenti:</h3>
             {% if comments.count > 0 %}
@@ -85,7 +88,7 @@
                 <p class="field-content">Nessun commento!</p>
             {% endif %}
         </div>
-        <form action="{% url 'travelGroup:add_comment' trip.id %}" method="post">
+        <form action="{% url 'travelGroup:add_comment' trip.id %}" class="field_container" method="post">
             {% csrf_token %}
             {{ comment_form.as_p }}
             <button type="submit" name="add_comment" > AGGIUNGI COMMENTO</button>
