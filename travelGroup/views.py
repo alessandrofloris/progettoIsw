@@ -10,6 +10,7 @@ from django.conf import settings
 from django.urls import reverse
 from django.core.exceptions import ValidationError
 
+
 def login_page(request):
     form = AuthenticationForm()
     if request.method == 'POST':
@@ -52,28 +53,23 @@ def trips(request):
     return render(request, "travelGroup/trips.html", context)
 
 
+@login_required()
 def newtrip(request):
     if request.method == "POST":
         form = TripForm(request.POST)
         if form.is_valid():
-            if "create_button" in request.POST:
-                new_trip = form.save(commit=False)
-                new_trip.save()
-                new_trip.participants.add(request.user)
-                new_trip.save()
+            new_trip = form.save(commit=False)
+            new_trip.save()
+            new_trip.participants.add(request.user)
+            new_trip.save()
+            return redirect(reverse('travelGroup:mytrips'))
 
-                return HttpResponseRedirect(reverse('travelGroup:mytrips'))
-            elif "create_add_button" in request.POST:
-                new_trip = form.save(commit=False)
-                new_trip.save()
-                new_trip.participants.add(request.user)
-                new_trip.save()
-                url = "addactivity/" + str(new_trip.id)
-                return HttpResponseRedirect(url)
     else:
         form = TripForm()
     return render(request, "travelGroup/newtrip.html", {"newTripForm": form})
 
+
+@login_required()
 def addactivity(request, trip_id):
     trip = get_object_or_404(Trip, id=trip_id)
     if request.method == "POST":
@@ -83,30 +79,26 @@ def addactivity(request, trip_id):
             activity = form.save(commit=False)
             activity.trip = trip 
             activity.save()
-
-            return HttpResponseRedirect(reverse('travelGroup:mytrips'))
+            return redirect(reverse('travelGroup:mytrips'))
     else:
         form = ActivityForm()
     return render(request, "travelGroup/addactivity.html", {"addActivityForm": form})
 
 
+@login_required()
 def modify_trip(request, trip_id):
     trip = get_object_or_404(Trip, id=trip_id)
     if request.method == "POST":
         form = TripForm(request.POST, instance=trip)
         if form.is_valid():
-            if "create_button" in request.POST:
-                form.save()
-                return HttpResponseRedirect(reverse('travelGroup:mytrips'))
-            elif "create_add_button" in request.POST:
-                form.save()
-                url = "addactivity/" + str(trip.id)
-                return HttpResponseRedirect(url)
+            form.save()
+            return redirect(reverse('travelGroup:mytrips'))
     else:
-        form = TripForm()
+        form = TripForm(instance=trip)
     return render(request, "travelGroup/modifytrip.html", {"newTripForm": form})
 
 
+@login_required()
 def add_invitation(request):
     current_user = request.user
     invitations_list = Invitation.objects.filter(recipient=current_user.email, state=False)
@@ -165,6 +157,7 @@ def view_trip(request, trip_id):
     }
     # return render(request, "travelGroup/tripdetails.html", context)
     return render(request, "travelGroup/tripdetails.html", {"comment_form": comment_form, **context})
+
 
 def add_comment(request, trip_id):
     current_user = request.user

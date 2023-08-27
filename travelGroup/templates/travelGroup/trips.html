@@ -12,7 +12,7 @@
     <header>
         <div class="box-container">
             <div class="header-button-container">
-                <a href="newtrip" name="newtrip_button" type="button" class="header-button">HOME</a>
+                <a href="newtrip" name="newtrip_button" type="button" class="header-button">NEW TRIP</a>
             </div>
             <div class="header-button-container">
                 <a href="/logout" class="header-button ">LOGOUT</a>
@@ -26,7 +26,7 @@
 
     {% if tripList %}
     <main class="main">
-        <h2>Your trips</h2>
+        <h2 id="trips-title" >Your trips</h2>
         <div class="trip-list-table">
             <div class="single-trip-container ">
                 <div class="single-field-trip-container trip-table-header">
@@ -52,6 +52,9 @@
                 </div>
                 <div class="single-field-trip-container trip-table-header">
                     Modify Trip
+                </div>
+                <div class="single-field-trip-container trip-table-header">
+                    Add Activity
                 </div>
             </div>
         {% for trip in tripList %}
@@ -79,16 +82,21 @@
                     {{ trip.activity_set.count }} activities
                 </div>
                 <div class="single-field-trip-container">
-                    <a href={% url 'travelGroup:viewtrip' trip_id=trip.id %}>View</a>
+                    <a name="viewtrip" href={% url 'travelGroup:viewtrip' trip_id=trip.id %}>View</a>
                 </div>
                 <div class="single-field-trip-container">
-                    <a href={% url 'travelGroup:modifytrip' trip_id=trip.id %}>Modify</a>
+                    <a name="modifytrip" href={% url 'travelGroup:modifytrip' trip_id=trip.id %}>Modify</a>
+                </div>
+                <div class="single-field-trip-container">
+                    <a name="addactivity" href={% url 'travelGroup:addactivity' trip_id=trip.id %}>Add</a>
                 </div>
             </div>
             {% endfor %}
         </div>
         {% else %}
-            <h2>No trips to show!</h2>
+            <div >
+                <h2 id="no-trips-title">No trips to show!</h2>
+            </div>
         {% endif %}
 </main>
 
