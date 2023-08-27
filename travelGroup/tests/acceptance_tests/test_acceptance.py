@@ -2,7 +2,7 @@ import time
 import unittest
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from selenium.webdriver.edge.webdriver import WebDriver
+from selenium.webdriver.chrome.webdriver import WebDriver
 
 from selenium.webdriver.common.by import By
 from travelGroup.models import CustomUser, Trip, Invitation
