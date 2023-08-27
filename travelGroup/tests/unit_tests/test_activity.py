@@ -5,7 +5,7 @@ from travelGroup.forms import ActivityForm
 
 
 # --- Add Activity View Tests ---
-class AddActivityViewTestCase(TestCase):
+class ActivityTestCase(TestCase):
     
     # Set up the testing environment before each test method. 
     # Initializes a client for simulating HTTP requests.

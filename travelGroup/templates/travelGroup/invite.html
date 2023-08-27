@@ -1,37 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "travelGroup/base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invita partecipante</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'travelGroup/style.css' %}">
-</head>
+{% block title %}Invita partecipante{% endblock %}
 
-<body>
-    <div class="box-buttons">
-        <a href="mytrips" class="button-link">I MIEI VIAGGI</a>
-    </div>
 
-    <p>
-       La tua email: {{  request.user.email }}
-    </p>
+{% block header %}
+
+    <header>
+        <div class="box-container">
+            <div class="header-button-container">
+                <a href="mytrips" type="button" class="header-button">MY TRIPS</a>
+            </div>
+            <div class="header-button-container">
+                <a href="/logout" name="logout_button" class="header-button ">LOGOUT</a>
+            </div>
+        </div>
+    </header>
+
+{% endblock %}
+
+{% block main-content %}
+
+    <p>Username:   <b> {{  request.user.username }} </b> </p>
+    <p>Your email: <b> {{  request.user.email }} </b></p>
+
 
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
 
-        <input type="submit" class="button-link button-invite" value="INVITA">
+        <input type="submit" name="new_invite" class="button-link button-invite" value="INVITE">
     </form>
 
 
     <table class="invitations-table">
-        <caption><h3>I miei inviti</h3></caption>
+        <caption><h3>Invitations received</h3></caption>
         <tr>
-            <th>Mittente</th>
+            <th>Recipient</th>
             <!-- <th>Destinatario</th> -->
-            <th>Viaggio</th>
+            <th>Trip name</th>
             <th>State</th>
         </tr>
     {% if invitations_list %}
@@ -45,22 +51,21 @@
                 <td>
                     <form action="{% url 'travelGroup:process_invitation' invitation.id %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="button-accept button-link" name="accept">Accetta</button>
-                        <button type="submit" class="button-reject button-link" name="decline">Rifiuta</button>
+                        <button type="submit" class="button-accept button-link" name="accept">ACCEPT</button>
+                        <button type="submit" class="button-reject button-link" name="decline">DECLINE</button>
                     </form>
                 </td>
             </tr>
         {% endfor %}
     {% else %}
         <tr>
-            <td colspan="5">Nessun invito disponibile.</td>
+            <td colspan="5">No invitations to show.</td>
         </tr>
     {% endif %}
     </table>
 
-    <footer>
-    </footer>
+{% endblock %}
 
-</body>
+{% block footer %}
 
-</html>
+{% endblock %}

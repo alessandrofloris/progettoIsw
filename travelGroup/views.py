@@ -118,7 +118,6 @@ def add_invitation(request):
 
     return render(request, 'travelGroup/invite.html', {'form': form, 'invitations_list': invitations_list})
 
-
 def process_invitation(request, invitation_id):
 
     invitation = Invitation.objects.get(pk=invitation_id)
@@ -139,7 +138,7 @@ def process_invitation(request, invitation_id):
 
     return redirect('travelGroup:mytrips')
 
-
+@login_required()
 def view_trip(request, trip_id):
 
     comment_form = CommentForm()
@@ -155,7 +154,6 @@ def view_trip(request, trip_id):
         "activities": activities,
         "comments": comments
     }
-    # return render(request, "travelGroup/tripdetails.html", context)
     return render(request, "travelGroup/tripdetails.html", {"comment_form": comment_form, **context})
 
 
@@ -170,5 +168,8 @@ def add_comment(request, trip_id):
             new_comment = Comment.objects.create(content=content, user=current_user, trip=trip)
             new_comment.save()
 
-    # Utilizza la funzione `redirect` per tornare alla pagina precedente
-    return redirect(request.META.get('HTTP_REFERER', 'mytrips'))
+    # trip_url = reverse('view_trip', args=[trip_id])
+
+    trip_url = f'/viewtrip/{trip_id}'
+    # return HttpResponseRedirect(trip_url)
+    return redirect(trip_url)
