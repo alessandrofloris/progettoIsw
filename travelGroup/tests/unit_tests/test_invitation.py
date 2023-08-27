@@ -6,7 +6,7 @@ from travelGroup.forms import InvitationForm
 from travelGroup.models import Trip, CustomUser, Invitation
 
 
-class InvitationTest(TestCase):
+class InvitationTestCase(TestCase):
 
     @classmethod
     def setUpClass(cls):

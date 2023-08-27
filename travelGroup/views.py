@@ -155,7 +155,6 @@ def view_trip(request, trip_id):
         "activities": activities,
         "comments": comments
     }
-    # return render(request, "travelGroup/tripdetails.html", context)
     return render(request, "travelGroup/tripdetails.html", {"comment_form": comment_form, **context})
 
 
