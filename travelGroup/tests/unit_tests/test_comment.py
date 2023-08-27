@@ -44,7 +44,7 @@ class CommentTest(TestCase):
 
         # Check if the comment was added correctly to the database
         comment_count_after = Comment.objects.filter(trip=self.test_trip).count()
-        self.assertEqual(comment_count_before, comment_count_after)
+        self.assertGreater(comment_count_after, comment_count_before)
         self.assertTrue(Comment.objects.filter(content=comment_content).exists())
 
         comment = Comment.objects.get(content=comment_content)

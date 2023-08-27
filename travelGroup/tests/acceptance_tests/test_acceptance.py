@@ -2,8 +2,9 @@ import time
 import unittest
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from selenium.webdriver.edge.webdriver import WebDriver
+from selenium.webdriver.chrome.webdriver import WebDriver
 
+from selenium.webdriver.common.by import By
 from travelGroup.models import CustomUser, Trip, Invitation
 from travelGroup.tests.acceptance_tests.ActivityTest import ActivityTest
 from travelGroup.tests.acceptance_tests.AuthenticationTest import AuthenticationTest
@@ -86,27 +87,69 @@ class AcceptanceTests(StaticLiveServerTestCase):
 
         self.driver.quit()
 
+    def from_mytrips_to_trip_detail(self, id):
+        self.driver.find_element(By.NAME, "viewtrip").click()
+
+    def test_show_trip_details(self):
+        self.driver = WebDriver()
+        self.driver.get(self.live_server_url)
+        AuthenticationTest.login(self.driver, self.user1_data)
+        self.from_mytrips_to_trip_detail(self.trip1.id)
+        trip_name = self.driver.find_element(By.ID, "detail-trip-name").text
+        expected_content = self.trip1.name
+        self.assertEqual(trip_name, expected_content)
+
+    def test_there_are_no_trips(self):
+        self.driver = WebDriver()
+        self.driver.get(self.live_server_url)
+        AuthenticationTest.login(self.driver, self.user2_data)
+        expected_content = "No trips to show!"
+        content = self.driver.find_element(By.ID, "no-trips-title")
+
+        self.assertEqual(content.text, expected_content)
+
+    def test_there_are_trips(self):
+        self.driver = WebDriver()
+        self.driver.get(self.live_server_url)
+        AuthenticationTest.login(self.driver, self.user1_data)
+        TripTest.create_trip(self, self.trip1_data)
+        expected_content = "Your trips"
+        content = self.driver.find_element(By.ID, "trips-title")
+
+        self.assertEqual(content.text, expected_content)
+
+    def test_there_are_n_trips(self):
+        self.driver = WebDriver()
+        self.driver.get(self.live_server_url)
+        AuthenticationTest.login(self.driver, self.user2_data)
+        TripTest.create_trip(self, self.trip1_data)
+        TripTest.create_trip(self, self.trip2_data)
+        expected_result = 2
+        content = self.driver.find_elements(By.CLASS_NAME, "single-trip-container")
+        number_of_trips = len(content) - 1
+        self.assertEqual(number_of_trips, expected_result)
+
     def test_login(self):
         self.driver = WebDriver()
         self.driver.get(self.live_server_url)
 
         # Username wrong
         self.user1_data["username"] = "user_wrong"
-        AuthenticationTest.login(self.driver, self.user2_data)
+        AuthenticationTest.login(self.driver, self.user1_data)
         time.sleep(2)
 
         # Password wrong
         self.user1_data["username"] = "user1"
         self.user1_data["password"] = "psw_wrong"
-        AuthenticationTest.login(self.driver, self.user2_data)
+        AuthenticationTest.login(self.driver, self.user1_data)
         time.sleep(2)
 
         # Data set correctly
         self.user1_data["password"] = "password1"
-        AuthenticationTest.login(self.driver, self.user2_data)
+        AuthenticationTest.login(self.driver, self.user1_data)
 
         self.driver.quit()
-    
+
     def test_new_trip(self):
         self.driver = WebDriver()
         self.driver.get(self.live_server_url)
