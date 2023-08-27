@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from travelGroup.models import CustomUser
 
+
 class NewTripViewAcceptanceTest(StaticLiveServerTestCase):
 
     def setUp(self):
@@ -70,6 +71,6 @@ class NewTripViewAcceptanceTest(StaticLiveServerTestCase):
         date_value = "2023-08-16"
         self.driver.execute_script("arguments[0].value = arguments[1]", trip_arrival_date, date_value)
 
-        trip_create_button = self.driver.find_element(By.NAME, "create_add_button")
+        trip_create_button = self.driver.find_element(By.NAME, "create_button")
         trip_create_button.click()
     
